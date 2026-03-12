@@ -62,10 +62,12 @@ nav.scrolled{
   border-color:var(--border);
   padding:.9rem 2.5rem;
 }
-.nav-logo-img{
-  height:32px;
-  width:auto;
-  display:block;
+.nav-logo{
+  font-family:var(--font-display);
+  font-size:1.5rem;
+  letter-spacing:.08em;
+  color:var(--white);
+  text-decoration:none;
 }
 .nav-links{display:flex;align-items:center;gap:2rem}
 .nav-links a{
@@ -790,10 +792,10 @@ footer{
   display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:.75rem;
 }
-.footer-logo-img{
-  height:24px;
-  width:auto;
-  display:block;
+.footer-logo{
+  font-family:var(--font-display);
+  font-size:1.15rem;letter-spacing:.08em;
+  color:var(--white);
 }
 footer p{font-size:.75rem;color:var(--muted)}
 footer a{color:var(--muted);text-decoration:none;transition:color .2s}
@@ -812,7 +814,7 @@ footer a:hover{color:var(--emerald)}
 
 <!-- NAV -->
 <nav id="nav">
-  <img class="nav-logo-img" src="public/images/Logo.jpeg" alt="GOPLAI"/>
+  <a href="#" class="nav-logo">G&#127936;PLAI</a>
   <div class="nav-links">
     <a href="#how">How it works</a>
     <a href="#demo">Demo</a>
@@ -1155,7 +1157,7 @@ footer a:hover{color:var(--emerald)}
 
 <!-- FOOTER -->
 <footer>
-  <img class="footer-logo-img" src="public/images/Logo.jpeg" alt="GOPLAI"/>
+  <div class="footer-logo">G&#127936;PLAI</div>
   <p>&copy; 2026 GOPLAI · UC Berkeley Haas</p>
   <p><a href="mailto:team@letsgoplai.com">team@letsgoplai.com</a></p>
 </footer>
