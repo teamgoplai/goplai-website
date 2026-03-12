@@ -92,7 +92,39 @@ nav.scrolled{
   justify-content:flex-end;
   padding:0 2.5rem 5rem;
   position:relative;overflow:hidden;
+  /* Task 1: Hero background image — swap gradient for real image when available */
+  /* background-image:url('public/images/hero-bg.jpg'); */
+  background-size:cover;
+  background-position:center 30%;
 }
+
+/* hero background placeholder gradient (remove when hero-bg.jpg is added) */
+.hero-bg-img{
+  position:absolute;
+  inset:0;
+  /* Replace this gradient with: background-image:url('public/images/hero-bg.jpg'); background-size:cover; background-position:center 30%; */
+  background:
+    radial-gradient(ellipse at 30% 60%, rgba(232,104,51,.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 40%, rgba(16,185,129,.06) 0%, transparent 50%),
+    linear-gradient(180deg, var(--black) 0%, var(--black3) 100%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Task 1: Dark overlay for hero image */
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(6,6,8,1) 0%,
+    rgba(6,6,8,0.75) 40%,
+    rgba(6,6,8,0.4) 100%
+  );
+  z-index:1;
+}
+/* bump all hero children above overlay */
+.hero > *:not(.hero-overlay):not(.hero-court):not(.hero-bg-img){ position:relative; z-index:2; }
 
 /* court arc background */
 .hero-court{
@@ -100,6 +132,7 @@ nav.scrolled{
   top:0;left:0;right:0;bottom:0;
   pointer-events:none;
   overflow:hidden;
+  z-index:1;
 }
 .hero-court svg{
   position:absolute;
@@ -118,6 +151,7 @@ nav.scrolled{
   width:900px;height:600px;
   background:radial-gradient(ellipse at center bottom,rgba(16,185,129,.18) 0%,transparent 65%);
   pointer-events:none;
+  z-index:1;
 }
 
 .hero-eyebrow{
@@ -318,27 +352,71 @@ section{padding:7rem 2.5rem}
   padding-left:1.25rem;
   margin:2rem 0;
 }
-.stat-blocks{
-  display:flex;flex-direction:column;gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  border-radius:10px;overflow:hidden;
+
+/* Problem section: phone mockup visual */
+.problem-visual{
+  display:flex;
+  justify-content:center;
 }
-.stat-block{
-  background:var(--black2);
-  padding:1.75rem;
+.phone-mockup{
+  width:260px;
+  background:var(--black3);
+  border-radius:28px;
+  border:2px solid rgba(255,255,255,.08);
+  padding:12px;
+  box-shadow:0 40px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.03);
 }
-.stat-block .num{
-  font-family:var(--font-display);
-  font-size:3.5rem;letter-spacing:.02em;
-  line-height:1;
-  color:var(--emerald);
-  margin-bottom:.25rem;
+.phone-screen{
+  background:var(--black);
+  border-radius:20px;
+  overflow:hidden;
+  padding:16px 12px;
 }
-.stat-block .label{
-  font-size:.85rem;font-weight:400;
-  color:rgba(245,245,240,.5);
-  line-height:1.4;
+.phone-header{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:12px;
+  padding:0 4px;
+}
+.phone-header-text{
+  font-family:var(--font-cond);font-size:.9rem;font-weight:700;
+  color:var(--white);
+}
+.phone-header-count{
+  font-size:.7rem;color:var(--muted);
+}
+.phone-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:3px;
+  margin-bottom:12px;
+}
+.phone-thumb{
+  aspect-ratio:1;
+  border-radius:4px;
+  background:
+    linear-gradient(135deg, rgba(232,104,51,.06) 0%, rgba(16,185,129,.03) 100%),
+    var(--black2);
+  position:relative;
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-end;
+  padding:3px 5px;
+}
+.thumb-dur{
+  font-size:.55rem;
+  font-weight:500;
+  color:rgba(255,255,255,.35);
+  font-family:var(--font-body);
+}
+.phone-label{
+  text-align:center;
+  font-size:.7rem;
+  color:rgba(255,255,255,.2);
+  font-style:italic;
+  padding-top:4px;
+}
+@media(max-width:750px){
+  .phone-mockup{width:220px}
 }
 
 /* ── HOW IT WORKS ── */
@@ -349,13 +427,14 @@ section{padding:7rem 2.5rem}
   flex-direction:column;
   gap:0;
 }
+/* Task 2: 3-column grid for step visuals */
 .step-row{
   display:grid;
-  grid-template-columns:80px 1fr;
+  grid-template-columns:80px 1fr 1fr;
   gap:2rem;
   padding:2.5rem 0;
   border-top:1px solid var(--border);
-  align-items:start;
+  align-items:center;
 }
 .step-row:last-child{border-bottom:1px solid var(--border)}
 .step-num-big{
@@ -364,7 +443,6 @@ section{padding:7rem 2.5rem}
   color:rgba(255,255,255,.06);
   padding-top:.15rem;
 }
-.step-content{}
 .step-content h3{
   font-family:var(--font-cond);
   font-size:1.6rem;font-weight:700;letter-spacing:.04em;
@@ -386,9 +464,84 @@ section{padding:7rem 2.5rem}
   padding:.3rem .8rem;border-radius:100px;
   margin-bottom:.75rem;
 }
+/* Task 2: Step visual containers */
+.step-visual{
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.07);
+  aspect-ratio:16/9;
+  background:var(--black3);
+}
+.step-visual img,.step-visual video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+/* placeholder for AI-generated step images */
+.step-visual-placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-cond);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.1);
+}
+.step-visual-placeholder.record{
+  background:
+    radial-gradient(circle at 30% 60%, rgba(232,104,51,.08) 0%, transparent 60%),
+    radial-gradient(circle at 70% 30%, rgba(16,185,129,.05) 0%, transparent 50%),
+    var(--black3);
+}
+.step-visual-placeholder.ai{
+  background:
+    linear-gradient(135deg, rgba(16,185,129,.04) 0%, transparent 50%),
+    repeating-linear-gradient(0deg, rgba(16,185,129,.02) 0px, rgba(16,185,129,.02) 1px, transparent 1px, transparent 40px),
+    repeating-linear-gradient(90deg, rgba(16,185,129,.02) 0px, rgba(16,185,129,.02) 1px, transparent 1px, transparent 40px),
+    var(--black3);
+}
+@media(max-width:900px){
+  .step-row{grid-template-columns:80px 1fr;gap:1rem}
+  .step-visual{display:none}
+}
 @media(max-width:600px){
-  .step-row{grid-template-columns:50px 1fr;gap:1rem}
+  .step-row{grid-template-columns:50px 1fr}
   .step-num-big{font-size:3rem}
+}
+
+/* ── PRODUCT DEMO ── (Task 4) */
+.demo-section{
+  background:var(--black2);
+  padding:7rem 2.5rem;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.demo-video-wrap{
+  position:relative;
+  margin-top:3.5rem;
+  display:flex;
+  justify-content:center;
+}
+.demo-glow{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:80%;height:60%;
+  background:radial-gradient(ellipse,rgba(16,185,129,.12) 0%,transparent 65%);
+  pointer-events:none;
+  z-index:0;
+}
+.demo-video{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:1000px;
+  border-radius:12px;
+  border:1px solid rgba(16,185,129,.15);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 60px 120px rgba(0,0,0,0.7);
+  display:block;
+}
+@media(max-width:600px){
+  .demo-section{padding:4rem 1.25rem}
 }
 
 /* ── TRANSFORMATION ── */
@@ -446,6 +599,39 @@ section{padding:7rem 2.5rem}
 .transform-arrow-col svg{
   color:var(--emerald);
   flex-shrink:0;
+}
+
+/* Task 3: Transform product preview */
+.transform-product-preview{
+  margin-top:3rem;
+  position:relative;
+  display:flex;
+  justify-content:center;
+}
+.product-glow{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:600px;height:300px;
+  background:radial-gradient(ellipse,rgba(16,185,129,0.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+.product-frame{
+  border:1px solid rgba(16,185,129,0.2);
+  border-radius:12px;
+  overflow:hidden;
+  max-width:900px;
+  width:100%;
+  transform:perspective(1200px) rotateX(4deg);
+  box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.05);
+  transition:transform 0.4s ease;
+}
+.product-frame:hover{
+  transform:perspective(1200px) rotateX(1deg);
+}
+.product-frame img,.product-frame video{
+  width:100%;
+  display:block;
 }
 
 /* ── THE LOOP ── */
@@ -577,7 +763,6 @@ section{padding:7rem 2.5rem}
 .founder-avatar-initials{
   font-family:var(--font-display);font-size:1.1rem;color:var(--emerald);
 }
-.founder-info{}
 .founder-name{font-weight:600;font-size:1rem;margin-bottom:.15rem}
 .founder-role{
   font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
@@ -686,6 +871,7 @@ footer a:hover{color:var(--emerald)}
   <div class="nav-logo">G<span class="ball">O</span>PLAI</div>
   <div class="nav-links">
     <a href="#how">How it works</a>
+    <a href="#demo">Demo</a>
     <a href="#loop">The loop</a>
     <a href="#founders">About</a>
   </div>
@@ -694,31 +880,24 @@ footer a:hover{color:var(--emerald)}
 
 <!-- HERO -->
 <section class="hero">
+  <!-- Task 1: Background image layer (swap placeholder for real hero-bg.jpg) -->
+  <div class="hero-bg-img"></div>
+  <!-- Task 1: Dark overlay for text legibility -->
+  <div class="hero-overlay"></div>
+
   <div class="hero-court">
     <svg viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- half court line -->
       <line x1="0" y1="400" x2="1200" y2="400" stroke="white" stroke-width="2"/>
-      <!-- center circle -->
       <circle cx="600" cy="400" r="120" stroke="white" stroke-width="2"/>
-      <!-- center dot -->
       <circle cx="600" cy="400" r="8" fill="white"/>
-      <!-- left paint -->
       <rect x="0" y="260" width="190" height="280" stroke="white" stroke-width="2"/>
-      <!-- left 3pt arc -->
       <path d="M 0 160 Q 380 400 0 640" stroke="white" stroke-width="2" fill="none"/>
-      <!-- left restricted -->
       <path d="M 60 375 Q 130 400 60 425" stroke="white" stroke-width="2" fill="none"/>
-      <!-- left free throw circle -->
       <circle cx="190" cy="400" r="72" stroke="white" stroke-width="2"/>
-      <!-- right paint -->
       <rect x="1010" y="260" width="190" height="280" stroke="white" stroke-width="2"/>
-      <!-- right 3pt arc -->
       <path d="M 1200 160 Q 820 400 1200 640" stroke="white" stroke-width="2" fill="none"/>
-      <!-- right restricted -->
       <path d="M 1140 375 Q 1070 400 1140 425" stroke="white" stroke-width="2" fill="none"/>
-      <!-- right free throw circle -->
       <circle cx="1010" cy="400" r="72" stroke="white" stroke-width="2"/>
-      <!-- outer boundary -->
       <rect x="10" y="10" width="1180" height="780" stroke="white" stroke-width="2"/>
     </svg>
   </div>
@@ -787,18 +966,27 @@ footer a:hover{color:var(--emerald)}
         <p>GOPLAI fixes that. Record the game, upload it, and get clean highlight clips for every player — before the next morning.</p>
       </div>
       <div class="reveal reveal-delay-2">
-        <div class="stat-blocks">
-          <div class="stat-block">
-            <div class="num" data-count="60">0</div>
-            <p class="label">Minutes of footage from a single rec league game — most of it never watched</p>
-          </div>
-          <div class="stat-block">
-            <div class="num"><span data-count="2" data-suffix="hrs">0</span></div>
-            <p class="label">Time from upload to highlight clips ready in your inbox</p>
-          </div>
-          <div class="stat-block">
-            <div class="num"><span data-count="10">0</span> <span style="font-size:2rem;color:rgba(16,185,129,.6)">families</span></div>
-            <p class="label">Get clips from a single recording. One parent does the work, every team member benefits</p>
+        <!-- Visual: phone mockup showing the problem -->
+        <div class="problem-visual">
+          <div class="phone-mockup">
+            <div class="phone-screen">
+              <div class="phone-header">
+                <span class="phone-header-text">Camera Roll</span>
+                <span class="phone-header-count">247 Videos</span>
+              </div>
+              <div class="phone-grid">
+                <div class="phone-thumb"><span class="thumb-dur">62:04</span></div>
+                <div class="phone-thumb"><span class="thumb-dur">58:31</span></div>
+                <div class="phone-thumb"><span class="thumb-dur">61:17</span></div>
+                <div class="phone-thumb"><span class="thumb-dur">59:45</span></div>
+                <div class="phone-thumb"><span class="thumb-dur">63:22</span></div>
+                <div class="phone-thumb"><span class="thumb-dur">57:08</span></div>
+                <div class="phone-thumb"><span class="thumb-dur">60:53</span></div>
+                <div class="phone-thumb"><span class="thumb-dur">64:11</span></div>
+                <div class="phone-thumb"><span class="thumb-dur">55:39</span></div>
+              </div>
+              <div class="phone-label">Every Saturday. Never edited.</div>
+            </div>
           </div>
         </div>
       </div>
@@ -821,6 +1009,11 @@ footer a:hover{color:var(--emerald)}
           <h3>Set up and record</h3>
           <p>Prop your phone on a tripod at halfcourt. Landscape mode, wide angle. Hit record and go watch your kid play. Any iPhone or Android works — no special equipment, no app to open mid-game.</p>
         </div>
+        <!-- Task 2: Step visual -->
+        <div class="step-visual">
+          <!-- Replace with: <img src="public/images/step-record.jpg" alt="Phone on tripod at basketball court"/> -->
+          <div class="step-visual-placeholder record">Phone on tripod · Courtside</div>
+        </div>
       </div>
       <div class="step-row reveal reveal-delay-2">
         <div class="step-num-big">02</div>
@@ -828,6 +1021,11 @@ footer a:hover{color:var(--emerald)}
           <span class="tag">Computer vision · Deep learning</span>
           <h3>Upload the footage</h3>
           <p>Drop the game file into GOPLAI. Our AI — trained on thousands of basketball plays — watches every second, detecting every made basket for every player on the court. No tagging required. No coach involvement.</p>
+        </div>
+        <!-- Task 2: Step visual -->
+        <div class="step-visual">
+          <!-- Replace with: <img src="public/images/step-ai.jpg" alt="AI detection visualization"/> -->
+          <div class="step-visual-placeholder ai">AI detection · Computer vision</div>
         </div>
       </div>
       <div class="step-row reveal reveal-delay-3">
@@ -837,7 +1035,32 @@ footer a:hover{color:var(--emerald)}
           <h3>Highlights delivered</h3>
           <p>Within 1–2 hours, you get a Game Mixtape (every highlight combined) and individual clips. Players tap "That's me" to claim their plays. Save to profile. Share to Instagram, group chat, wherever. That's it.</p>
         </div>
+        <!-- Task 2: Step visual — product demo video -->
+        <div class="step-visual">
+          <video autoplay muted loop playsinline src="public/videos/goplai-demo.mp4"></video>
+        </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT DEMO (Task 4) -->
+<section class="demo-section" id="demo">
+  <div class="container">
+    <div class="reveal">
+      <p class="s-label">See it in action</p>
+      <h2 class="s-title">Upload to highlights<br>in under 2 hours.</h2>
+    </div>
+    <div class="demo-video-wrap reveal reveal-delay-1">
+      <div class="demo-glow"></div>
+      <video
+        class="demo-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        src="public/videos/goplai-demo.mp4"
+      ></video>
     </div>
   </div>
 </section>
@@ -878,6 +1101,13 @@ footer a:hover{color:var(--emerald)}
         </ul>
       </div>
     </div>
+    <!-- Task 3: Product screenshot preview -->
+    <div class="transform-product-preview reveal reveal-delay-3">
+      <div class="product-glow"></div>
+      <div class="product-frame">
+        <img src="public/images/product-screenshot.jpg" alt="GOPLAI highlight delivery page showing player profile and clips"/>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -895,12 +1125,12 @@ footer a:hover{color:var(--emerald)}
           <div class="n">1</div>
           <div class="unit">Recorder</div>
         </div>
-        <div class="loop-counter-arrow">→</div>
+        <div class="loop-counter-arrow">&rarr;</div>
         <div class="loop-counter">
           <div class="n">10</div>
           <div class="unit">Families</div>
         </div>
-        <div class="loop-counter-arrow">→</div>
+        <div class="loop-counter-arrow">&rarr;</div>
         <div class="loop-counter">
           <div class="n">100+</div>
           <div class="unit">People see clips</div>
@@ -908,22 +1138,22 @@ footer a:hover{color:var(--emerald)}
       </div>
       <div class="loop-steps-grid reveal reveal-delay-2">
         <div class="loop-step-card">
-          <div class="icon">🎥</div>
+          <div class="icon">&#127909;</div>
           <h4>One parent records</h4>
           <p>Sets up their phone at halfcourt. Hits record. Watches the game like everyone else.</p>
         </div>
         <div class="loop-step-card">
-          <div class="icon">🤖</div>
+          <div class="icon">&#129302;</div>
           <h4>AI works overnight</h4>
           <p>Every made basket detected. Clips created for every player — not just their kid.</p>
         </div>
         <div class="loop-step-card">
-          <div class="icon">🔗</div>
+          <div class="icon">&#128279;</div>
           <h4>Game link shared</h4>
           <p>Drops the link in the team group chat. Every parent claims their own kid's highlights.</p>
         </div>
         <div class="loop-step-card">
-          <div class="icon">📤</div>
+          <div class="icon">&#128228;</div>
           <h4>Clips spread further</h4>
           <p>10 parents share to their networks. Grandparents, coaches, friends — 100+ views per game.</p>
         </div>
@@ -943,7 +1173,7 @@ footer a:hover{color:var(--emerald)}
       <div class="testi-card reveal reveal-delay-1">
         <blockquote>"[Real quote from beta parent — replace before launch. Prioritize <em>emotional reaction</em> over product description.]"</blockquote>
         <div class="testi-author">
-          <div class="testi-avatar">—</div>
+          <div class="testi-avatar">&mdash;</div>
           <div class="testi-meta">
             <strong>Parent name, TBD</strong>
             <span>Parent · League, Bay Area</span>
@@ -953,7 +1183,7 @@ footer a:hover{color:var(--emerald)}
       <div class="testi-card reveal reveal-delay-2">
         <blockquote>"[Quote from player — ideally about <em>seeing themselves play</em> or sharing with friends/coach.]"</blockquote>
         <div class="testi-author">
-          <div class="testi-avatar">—</div>
+          <div class="testi-avatar">&mdash;</div>
           <div class="testi-meta">
             <strong>Player name, TBD</strong>
             <span>Player · Team, Bay Area</span>
@@ -963,7 +1193,7 @@ footer a:hover{color:var(--emerald)}
       <div class="testi-card reveal reveal-delay-3">
         <blockquote>"[Coach quote — about what highlights do for player motivation or team culture.]"</blockquote>
         <div class="testi-author">
-          <div class="testi-avatar">—</div>
+          <div class="testi-avatar">&mdash;</div>
           <div class="testi-meta">
             <strong>Coach name, TBD</strong>
             <span>Coach · League, Bay Area</span>
@@ -985,23 +1215,23 @@ footer a:hover{color:var(--emerald)}
     <div class="founders-grid">
       <div class="founder-card reveal reveal-delay-1">
         <div class="founder-avatar-wrap">
-          <!-- Replace src with real photo: <img src="/founders/gonzalo.jpg" alt="Gonzalo Vasquez"/> -->
+          <!-- Task 5: Replace with real headshot: <img src="public/images/founder-gonzalo.jpg" alt="Gonzalo Vasquez"/> -->
           <div class="founder-avatar-initials">GV</div>
         </div>
         <div class="founder-info">
-          <p class="founder-name">Gonzalo Vásquez</p>
-          <p class="founder-role">Product & Engineering</p>
+          <p class="founder-name">Gonzalo V&aacute;squez</p>
+          <p class="founder-role">Product &amp; Engineering</p>
           <p class="founder-bio">Berkeley Haas MBA '26. Former Senior PM at Rappi and Intuit. Built and shipped the AI pipeline that powers GOPLAI's highlight detection.</p>
         </div>
       </div>
       <div class="founder-card reveal reveal-delay-2">
         <div class="founder-avatar-wrap">
-          <!-- Replace src with real photo: <img src="/founders/angel.jpg" alt="Angel Tramontin"/> -->
+          <!-- Task 5: Replace with real headshot: <img src="public/images/founder-angel.jpg" alt="Angel Tramontin"/> -->
           <div class="founder-avatar-initials">AT</div>
         </div>
         <div class="founder-info">
           <p class="founder-name">Angel Tramontin</p>
-          <p class="founder-role">Growth & Operations</p>
+          <p class="founder-role">Growth &amp; Operations</p>
           <p class="founder-bio">Berkeley Haas MBA '26. Former LinkedIn BizOps. 6+ years scaling global B2C and B2B operations. Former SEC college athlete.</p>
         </div>
       </div>
@@ -1017,7 +1247,7 @@ footer a:hover{color:var(--emerald)}
       <p class="cta-sub">Join the waitlist. We'll let you know when we open to your league. Free during beta.</p>
       <form class="cta-form" id="cta-form" onsubmit="submit(event,'cta')">
         <input type="email" id="cta-email" placeholder="Your email address" required/>
-        <button type="submit">Get early access →</button>
+        <button type="submit">Get early access &rarr;</button>
       </form>
       <p class="cta-note">Free during beta · Bay Area youth leagues · No credit card</p>
       <p class="success-msg" id="cta-success" style="text-align:center;margin-top:.75rem">You're on the list. We'll be in touch.</p>
@@ -1028,7 +1258,7 @@ footer a:hover{color:var(--emerald)}
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">G<span>O</span>PLAI</div>
-  <p>© 2026 GOPLAI · UC Berkeley Haas</p>
+  <p>&copy; 2026 GOPLAI · UC Berkeley Haas</p>
   <p><a href="mailto:team@letsgoplai.com">team@letsgoplai.com</a></p>
 </footer>
 
