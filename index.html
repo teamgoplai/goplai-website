@@ -102,11 +102,9 @@ nav.scrolled{
 .hero-bg-img{
   position:absolute;
   inset:0;
-  /* Replace this gradient with: background-image:url('public/images/hero-bg.jpg'); background-size:cover; background-position:center 30%; */
-  background:
-    radial-gradient(ellipse at 30% 60%, rgba(232,104,51,.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 40%, rgba(16,185,129,.06) 0%, transparent 50%),
-    linear-gradient(180deg, var(--black) 0%, var(--black3) 100%);
+  background-image:url('public/images/hero-bg.png');
+  background-size:cover;
+  background-position:center 30%;
   pointer-events:none;
   z-index:0;
 }
@@ -353,70 +351,18 @@ section{padding:7rem 2.5rem}
   margin:2rem 0;
 }
 
-/* Problem section: phone mockup visual */
-.problem-visual{
-  display:flex;
-  justify-content:center;
-}
-.phone-mockup{
-  width:260px;
-  background:var(--black3);
-  border-radius:28px;
-  border:2px solid rgba(255,255,255,.08);
-  padding:12px;
-  box-shadow:0 40px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.03);
-}
-.phone-screen{
-  background:var(--black);
-  border-radius:20px;
+/* Problem section visual */
+.problem-img-wrap{
+  border-radius:12px;
   overflow:hidden;
-  padding:16px 12px;
+  border:1px solid rgba(255,255,255,0.07);
+  margin-bottom:1.5rem;
 }
-.phone-header{
-  display:flex;justify-content:space-between;align-items:baseline;
-  margin-bottom:12px;
-  padding:0 4px;
-}
-.phone-header-text{
-  font-family:var(--font-cond);font-size:.9rem;font-weight:700;
-  color:var(--white);
-}
-.phone-header-count{
-  font-size:.7rem;color:var(--muted);
-}
-.phone-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:3px;
-  margin-bottom:12px;
-}
-.phone-thumb{
-  aspect-ratio:1;
-  border-radius:4px;
-  background:
-    linear-gradient(135deg, rgba(232,104,51,.06) 0%, rgba(16,185,129,.03) 100%),
-    var(--black2);
-  position:relative;
-  display:flex;
-  align-items:flex-end;
-  justify-content:flex-end;
-  padding:3px 5px;
-}
-.thumb-dur{
-  font-size:.55rem;
-  font-weight:500;
-  color:rgba(255,255,255,.35);
-  font-family:var(--font-body);
-}
-.phone-label{
-  text-align:center;
-  font-size:.7rem;
-  color:rgba(255,255,255,.2);
-  font-style:italic;
-  padding-top:4px;
-}
-@media(max-width:750px){
-  .phone-mockup{width:220px}
+.problem-img-wrap img{
+  width:100%;
+  display:block;
+  opacity:0.8;
+  filter:brightness(0.85);
 }
 
 /* ── HOW IT WORKS ── */
@@ -966,28 +912,9 @@ footer a:hover{color:var(--emerald)}
         <p>GOPLAI fixes that. Record the game, upload it, and get clean highlight clips for every player — before the next morning.</p>
       </div>
       <div class="reveal reveal-delay-2">
-        <!-- Visual: phone mockup showing the problem -->
-        <div class="problem-visual">
-          <div class="phone-mockup">
-            <div class="phone-screen">
-              <div class="phone-header">
-                <span class="phone-header-text">Camera Roll</span>
-                <span class="phone-header-count">247 Videos</span>
-              </div>
-              <div class="phone-grid">
-                <div class="phone-thumb"><span class="thumb-dur">62:04</span></div>
-                <div class="phone-thumb"><span class="thumb-dur">58:31</span></div>
-                <div class="phone-thumb"><span class="thumb-dur">61:17</span></div>
-                <div class="phone-thumb"><span class="thumb-dur">59:45</span></div>
-                <div class="phone-thumb"><span class="thumb-dur">63:22</span></div>
-                <div class="phone-thumb"><span class="thumb-dur">57:08</span></div>
-                <div class="phone-thumb"><span class="thumb-dur">60:53</span></div>
-                <div class="phone-thumb"><span class="thumb-dur">64:11</span></div>
-                <div class="phone-thumb"><span class="thumb-dur">55:39</span></div>
-              </div>
-              <div class="phone-label">Every Saturday. Never edited.</div>
-            </div>
-          </div>
+        <!-- Problem visual: camera roll full of unwatched game footage -->
+        <div class="problem-img-wrap">
+          <img src="public/images/the-problem.png" alt="Phone camera roll full of untouched basketball game videos"/>
         </div>
       </div>
     </div>
@@ -1011,8 +938,7 @@ footer a:hover{color:var(--emerald)}
         </div>
         <!-- Task 2: Step visual -->
         <div class="step-visual">
-          <!-- Replace with: <img src="public/images/step-record.jpg" alt="Phone on tripod at basketball court"/> -->
-          <div class="step-visual-placeholder record">Phone on tripod · Courtside</div>
+          <img src="public/images/step-record.png" alt="Phone on tripod recording a basketball game courtside"/>
         </div>
       </div>
       <div class="step-row reveal reveal-delay-2">
@@ -1024,8 +950,7 @@ footer a:hover{color:var(--emerald)}
         </div>
         <!-- Task 2: Step visual -->
         <div class="step-visual">
-          <!-- Replace with: <img src="public/images/step-ai.jpg" alt="AI detection visualization"/> -->
-          <div class="step-visual-placeholder ai">AI detection · Computer vision</div>
+          <img src="public/images/step-ai.png" alt="AI computer vision detecting basketball and hoop with bounding boxes"/>
         </div>
       </div>
       <div class="step-row reveal reveal-delay-3">
@@ -1053,14 +978,8 @@ footer a:hover{color:var(--emerald)}
     </div>
     <div class="demo-video-wrap reveal reveal-delay-1">
       <div class="demo-glow"></div>
-      <video
-        class="demo-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        src="public/videos/goplai-demo.mp4"
-      ></video>
+      <!-- Replace src with product demo GIF when ready -->
+      <img class="demo-video" src="public/images/demo-placeholder.gif" alt="GOPLAI product demo — upload to highlights"/>
     </div>
   </div>
 </section>
@@ -1099,13 +1018,6 @@ footer a:hover{color:var(--emerald)}
           <li>Every player on the team gets their own clips</li>
           <li>A highlight reel that grows every game</li>
         </ul>
-      </div>
-    </div>
-    <!-- Task 3: Product screenshot preview -->
-    <div class="transform-product-preview reveal reveal-delay-3">
-      <div class="product-glow"></div>
-      <div class="product-frame">
-        <img src="public/images/product-screenshot.jpg" alt="GOPLAI highlight delivery page showing player profile and clips"/>
       </div>
     </div>
   </div>
@@ -1171,32 +1083,22 @@ footer a:hover{color:var(--emerald)}
     </div>
     <div class="testi-grid">
       <div class="testi-card reveal reveal-delay-1">
-        <blockquote>"[Real quote from beta parent — replace before launch. Prioritize <em>emotional reaction</em> over product description.]"</blockquote>
+        <blockquote>"Automated highlight clips from full game footage is exactly the kind of tool athletes need right now — especially for <em>building their personal brand</em> and creating <em>NIL-worthy content</em>."</blockquote>
         <div class="testi-author">
-          <div class="testi-avatar">&mdash;</div>
+          <div class="testi-avatar">BN</div>
           <div class="testi-meta">
-            <strong>Parent name, TBD</strong>
-            <span>Parent · League, Bay Area</span>
+            <strong>Branded NIL</strong>
+            <span>NIL Platform</span>
           </div>
         </div>
       </div>
       <div class="testi-card reveal reveal-delay-2">
-        <blockquote>"[Quote from player — ideally about <em>seeing themselves play</em> or sharing with friends/coach.]"</blockquote>
+        <blockquote>"What you're building has real potential to be <em>widely used by families</em> and <em>monetized at a high level</em>."</blockquote>
         <div class="testi-author">
-          <div class="testi-avatar">&mdash;</div>
+          <div class="testi-avatar">&#127936;</div>
           <div class="testi-meta">
-            <strong>Player name, TBD</strong>
-            <span>Player · Team, Bay Area</span>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card reveal reveal-delay-3">
-        <blockquote>"[Coach quote — about what highlights do for player motivation or team culture.]"</blockquote>
-        <div class="testi-author">
-          <div class="testi-avatar">&mdash;</div>
-          <div class="testi-meta">
-            <strong>Coach name, TBD</strong>
-            <span>Coach · League, Bay Area</span>
+            <strong>Youth Basketball Coach</strong>
+            <span>North Bay, California</span>
           </div>
         </div>
       </div>
@@ -1215,8 +1117,7 @@ footer a:hover{color:var(--emerald)}
     <div class="founders-grid">
       <div class="founder-card reveal reveal-delay-1">
         <div class="founder-avatar-wrap">
-          <!-- Task 5: Replace with real headshot: <img src="public/images/founder-gonzalo.jpg" alt="Gonzalo Vasquez"/> -->
-          <div class="founder-avatar-initials">GV</div>
+          <img src="public/images/gonza.jpg" alt="Gonzalo Vasquez"/>
         </div>
         <div class="founder-info">
           <p class="founder-name">Gonzalo V&aacute;squez</p>
@@ -1226,8 +1127,7 @@ footer a:hover{color:var(--emerald)}
       </div>
       <div class="founder-card reveal reveal-delay-2">
         <div class="founder-avatar-wrap">
-          <!-- Task 5: Replace with real headshot: <img src="public/images/founder-angel.jpg" alt="Angel Tramontin"/> -->
-          <div class="founder-avatar-initials">AT</div>
+          <img src="public/images/angel.jpg" alt="Angel Tramontin"/>
         </div>
         <div class="founder-info">
           <p class="founder-name">Angel Tramontin</p>
