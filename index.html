@@ -235,27 +235,6 @@ nav.scrolled{
   margin-top:.6rem;
 }
 
-/* scroll indicator */
-.scroll-hint{
-  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  opacity:0;animation:fadeUp .6s 1.5s forwards;
-}
-.scroll-hint span{
-  font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
-  color:rgba(255,255,255,.25);
-}
-.scroll-line{
-  width:1px;height:40px;background:rgba(255,255,255,.1);
-  position:relative;overflow:hidden;
-}
-.scroll-line::after{
-  content:'';
-  position:absolute;top:-40px;left:0;width:1px;height:40px;
-  background:var(--emerald);
-  animation:scrollDown 1.6s ease-in-out infinite;
-}
-@keyframes scrollDown{to{top:40px}}
 
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
 @keyframes slideUp{to{opacity:1;transform:translateY(0)}}
@@ -810,10 +789,6 @@ footer a:hover{color:var(--emerald)}
     </div>
   </div>
 
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
 </section>
 
 <!-- MARQUEE -->
