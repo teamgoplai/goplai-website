@@ -1058,11 +1058,38 @@ function scrollToCta() {
 }
 
 // Waitlist submit
-function submit(e, id) {
+async function submit(e, id) {
   e.preventDefault();
-  // TODO: POST to Supabase or Resend
-  document.getElementById(id + '-form').style.display = 'none';
-  document.getElementById(id + '-success').style.display = 'block';
+  const form = document.getElementById(id + '-form');
+  const btn = form.querySelector('button');
+  const email = document.getElementById(id + '-email').value;
+  const successEl = document.getElementById(id + '-success');
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    const res = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, source: id }),
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      successEl.textContent = data.message;
+      form.style.display = 'none';
+      successEl.style.display = 'block';
+    } else {
+      btn.disabled = false;
+      btn.textContent = id === 'hero' ? 'Get early access' : 'Get early access \u2192';
+      alert(data.error || 'Something went wrong. Please try again.');
+    }
+  } catch {
+    btn.disabled = false;
+    btn.textContent = id === 'hero' ? 'Get early access' : 'Get early access \u2192';
+    alert('Network error. Please try again.');
+  }
 }
 </script>
 </body>
