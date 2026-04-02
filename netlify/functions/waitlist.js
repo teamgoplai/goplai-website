@@ -56,6 +56,7 @@ async function sendWelcomeEmail(email) {
     },
     body: JSON.stringify({
       from: "Angel from GoPlai <angel@joingoplai.com>",
+      reply_to: "angel@letsgoplai.com",
       to: [email],
       subject: "You're on the GoPlai waitlist!",
       html: `
