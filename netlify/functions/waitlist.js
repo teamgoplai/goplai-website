@@ -57,29 +57,104 @@ async function sendWelcomeEmail(email) {
     body: JSON.stringify({
       from: "GoPlai <hello@joingoplai.com>",
       to: [email],
-      subject: "Welcome to GoPlai - You're on the list!",
+      subject: "You're on the GoPlai waitlist!",
       html: `
-        <div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:32px 24px;color:#1a1a1a">
-          <img src="https://joingoplai.com/public/images/goplai-logo.png" alt="GoPlai" width="120" style="margin-bottom:24px"/>
-          <h1 style="font-size:22px;margin:0 0 12px">You're in!</h1>
-          <p style="font-size:15px;line-height:1.6;color:#444">
-            Thanks for signing up for early access to <strong>GoPlai</strong> — the AI-powered highlight reel generator for youth sports.
-          </p>
-          <p style="font-size:15px;line-height:1.6;color:#444">
-            We'll reach out soon with setup instructions. In the meantime, here's what to expect:
-          </p>
-          <ul style="font-size:14px;line-height:1.8;color:#444;padding-left:20px">
-            <li>Record your game with any phone or camera</li>
-            <li>Upload it to GoPlai</li>
-            <li>Get an AI-generated highlight reel in minutes</li>
-          </ul>
-          <p style="font-size:15px;line-height:1.6;color:#444">
-            Questions? Just reply to this email.
-          </p>
-          <p style="font-size:14px;color:#888;margin-top:32px">
-            — The GoPlai Team
-          </p>
-        </div>
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
+<body style="margin:0;padding:0;background:#f4f4f0;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f0;padding:32px 16px">
+<tr><td align="center">
+<table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%">
+
+  <!-- Logo -->
+  <tr><td style="padding:0 0 24px;text-align:center">
+    <img src="https://joingoplai.com/public/images/goplai-logo-new.svg" alt="GoPlai" width="100" style="display:inline-block"/>
+  </td></tr>
+
+  <!-- Hero Banner -->
+  <tr><td style="background:linear-gradient(135deg,#10b981 0%,#0d9669 50%,#047857 100%);border-radius:12px;padding:40px 32px;text-align:center">
+    <div style="display:inline-block;background:rgba(255,255,255,0.2);border-radius:20px;padding:6px 16px;margin-bottom:16px">
+      <span style="color:#fff;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase">&#10003; YOU'RE ON THE LIST</span>
+    </div>
+    <h1 style="color:#fff;font-size:32px;font-weight:800;margin:0 0 8px;line-height:1.2">You're in!</h1>
+    <p style="color:rgba(255,255,255,0.85);font-size:15px;margin:0;line-height:1.5">You're one of the first. Welcome to the inner circle.</p>
+  </td></tr>
+
+  <!-- Body -->
+  <tr><td style="background:#ffffff;border-radius:0 0 12px 12px;padding:32px 32px 40px">
+
+    <p style="font-size:20px;font-weight:700;color:#1a1a1a;margin:0 0 16px;line-height:1.3">Hey &#128075;</p>
+
+    <p style="font-size:15px;line-height:1.7;color:#444;margin:0 0 8px">
+      You just locked in early access to <strong>GoPlai</strong> &mdash; we're building the easiest way to turn a full game recording into a highlight reel, automatically.
+    </p>
+    <p style="font-size:15px;line-height:1.7;color:#444;margin:0 0 28px">
+      We're only letting in a small group to start so we can build this alongside real sports families. As an early member, your feedback will directly shape what we ship. We'll reach out personally when your spot is ready.
+    </p>
+
+    <!-- What to Expect -->
+    <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#10b981;margin:0 0 20px">WHAT TO EXPECT</p>
+
+    <!-- Step 1 -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px">
+    <tr>
+      <td width="40" valign="top" style="padding-top:2px"><span style="font-size:22px">&#127909;</span></td>
+      <td>
+        <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 4px">Record your game</p>
+        <p style="font-size:14px;color:#666;margin:0;line-height:1.6">Set up any phone or camera courtside. No special equipment needed.</p>
+      </td>
+    </tr>
+    </table>
+
+    <!-- Step 2 -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px">
+    <tr>
+      <td width="40" valign="top" style="padding-top:2px"><span style="font-size:22px">&#129302;</span></td>
+      <td>
+        <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 4px">AI finds the highlights</p>
+        <p style="font-size:14px;color:#666;margin:0;line-height:1.6">Our AI watches every minute and pulls out the best plays automatically.</p>
+      </td>
+    </tr>
+    </table>
+
+    <!-- Step 3 -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px">
+    <tr>
+      <td width="40" valign="top" style="padding-top:2px"><span style="font-size:22px">&#127916;</span></td>
+      <td>
+        <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 4px">Get your highlight reel</p>
+        <p style="font-size:14px;color:#666;margin:0;line-height:1.6">Receive a ready-to-share reel and individual clips of every key moment.</p>
+      </td>
+    </tr>
+    </table>
+
+    <!-- Divider -->
+    <hr style="border:none;border-top:1px solid #e5e5e5;margin:0 0 24px"/>
+
+    <!-- Referral CTA -->
+    <p style="font-size:15px;color:#444;text-align:center;margin:0 0 16px">Know a sports parent who should be in on this early?</p>
+    <table role="presentation" cellpadding="0" cellspacing="0" align="center">
+    <tr><td style="background:#10b981;border-radius:8px;text-align:center">
+      <a href="https://joingoplai.com" target="_blank" style="display:inline-block;padding:14px 32px;color:#fff;font-size:15px;font-weight:700;text-decoration:none">Share GoPlai &rarr;</a>
+    </td></tr>
+    </table>
+
+  </td></tr>
+
+  <!-- Footer -->
+  <tr><td style="padding:28px 8px 0;text-align:center">
+    <p style="font-size:12px;color:#999;margin:0 0 4px;line-height:1.6">
+      You're receiving this because you signed up at <a href="https://joingoplai.com" style="color:#999">joingoplai.com</a>.
+    </p>
+    <p style="font-size:12px;color:#999;margin:0;line-height:1.6">
+      Questions? Reply to this email or reach us at <a href="mailto:hello@joingoplai.com" style="color:#999">hello@joingoplai.com</a>.
+    </p>
+  </td></tr>
+
+</table>
+</td></tr>
+</table>
+</body></html>
       `,
     }),
   });
