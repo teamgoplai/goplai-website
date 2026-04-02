@@ -132,6 +132,14 @@ async function sendWelcomeEmail(email) {
     <!-- Divider -->
     <hr style="border:none;border-top:1px solid #e5e5e5;margin:0 0 24px"/>
 
+    <!-- WhatsApp CTA -->
+    <p style="font-size:15px;color:#444;text-align:center;margin:0 0 16px">Join our early access community on WhatsApp:</p>
+    <table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin-bottom:20px">
+    <tr><td style="background:#25D366;border-radius:8px;text-align:center">
+      <a href="https://chat.whatsapp.com/Fx10fdn77e51flQ34HnCPr?mode=gi_t" target="_blank" style="display:inline-block;padding:14px 32px;color:#fff;font-size:15px;font-weight:700;text-decoration:none">Join WhatsApp Group &rarr;</a>
+    </td></tr>
+    </table>
+
     <!-- Referral CTA -->
     <p style="font-size:15px;color:#444;text-align:center;margin:0 0 16px">Know a sports parent who should be in on this early?</p>
     <table role="presentation" cellpadding="0" cellspacing="0" align="center">
