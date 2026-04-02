@@ -55,7 +55,7 @@ async function sendWelcomeEmail(email) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "Angel from GoPlai <angel@letsgoplai.com>",
+      from: "Angel from GoPlai <angel@joingoplai.com>",
       to: [email],
       subject: "You're on the GoPlai waitlist!",
       html: `
@@ -147,7 +147,7 @@ async function sendWelcomeEmail(email) {
       You're receiving this because you signed up at <a href="https://joingoplai.com" style="color:#999">joingoplai.com</a>.
     </p>
     <p style="font-size:12px;color:#999;margin:0;line-height:1.6">
-      Questions? Reply to this email or reach us at <a href="mailto:angel@letsgoplai.com" style="color:#999">angel@letsgoplai.com</a>.
+      Questions? Reply to this email or reach us at <a href="mailto:angel@joingoplai.com" style="color:#999">angel@joingoplai.com</a>.
     </p>
   </td></tr>
 
