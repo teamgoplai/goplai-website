@@ -199,10 +199,10 @@ nav.scrolled{
 .hero-sub{
   font-size:1.05rem;font-weight:300;
   color:rgba(245,245,240,.6);
-  max-width:460px;line-height:1.7;
+  max-width:min(460px,100%);line-height:1.7;
 }
 .hero-sub strong{color:var(--white);font-weight:500}
-.hero-form-wrap{flex-shrink:0}
+.hero-form-wrap{flex-shrink:0;max-width:100%}
 .hero-form{display:flex;gap:0;width:100%;max-width:400px}
 .hero-form input{
   flex:1;
@@ -252,9 +252,13 @@ nav.scrolled{
 
 @media(max-width:700px){
   .hero{padding:8rem 1.25rem 4rem}
-  .hero-bottom{flex-direction:column;align-items:flex-start}
+  .hero-bottom{flex-direction:column;align-items:flex-start;max-width:100%}
+  .hero-form-wrap{width:100%;max-width:100%}
   .hero-form{max-width:100%;width:100%}
+  .hero-form input{min-width:0}
+  .hero-form button{padding:1rem 1rem;font-size:.9rem}
   .hero-h1{font-size:clamp(3.5rem,15vw,6rem)}
+  .hero-note{font-size:.7rem;word-wrap:break-word}
 }
 
 /* ── MARQUEE STRIP ── */
