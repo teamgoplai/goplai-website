@@ -1,3 +1,20 @@
+// Rate limiting — in-memory, resets on cold start (acceptable for serverless)
+const ipHits = new Map();
+const RATE_LIMIT = 5;
+const WINDOW_MS = 60 * 1000;
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const entry = ipHits.get(ip);
+  if (!entry || now > entry.resetAt) {
+    ipHits.set(ip, { count: 1, resetAt: now + WINDOW_MS });
+    return false;
+  }
+  const updated = { ...entry, count: entry.count + 1 };
+  ipHits.set(ip, updated);
+  return updated.count > RATE_LIMIT;
+}
+
 // Supabase publishable credentials (safe to embed — INSERT-only RLS policy)
 const SUPABASE_URL = "https://cajdlgfdesedrkdozecb.supabase.co";
 const SUPABASE_ANON_KEY =
@@ -6,10 +23,13 @@ const SUPABASE_ANON_KEY =
 // Secret — set in Netlify dashboard: Site Settings > Environment variables
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
+const ALLOWED_ORIGIN = "https://joingoplai.com";
+
 const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
   "Access-Control-Allow-Headers": "Content-Type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Vary": "Origin",
 };
 
 function jsonResponse(status, body) {
@@ -184,6 +204,11 @@ export default async function handler(req) {
     return jsonResponse(405, { error: "Method not allowed" });
   }
 
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (isRateLimited(ip)) {
+    return jsonResponse(429, { error: "Too many requests. Please wait a moment." });
+  }
+
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !RESEND_API_KEY) {
     console.error("Missing environment variables");
     return jsonResponse(500, { error: "Server configuration error" });
@@ -202,13 +227,13 @@ export default async function handler(req) {
     return jsonResponse(400, { error: "Email is required" });
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/;
+  if (!emailRegex.test(email) || email.length > 254) {
     return jsonResponse(400, { error: "Invalid email format" });
   }
 
   const validSources = ["hero", "cta"];
-  const cleanSource = validSources.includes(source) ? source : "unknown";
+  const cleanSource = validSources.includes(source) ? source : "hero";
 
   try {
     const { duplicate } = await insertEmail(email.toLowerCase().trim(), cleanSource);

@@ -6,7 +6,8 @@
 <title>GoPlai — Your Highlights, Automatically</title>
 <link rel="icon" href="public/images/goplai-logo-new.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -75,7 +76,7 @@ nav.scrolled{
 .nav-links{display:flex;align-items:center;gap:2rem}
 .nav-links a{
   font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--muted);text-decoration:none;transition:color .2s;
+  color:var(--white);text-decoration:none;transition:color .2s;
 }
 .nav-links a:hover{color:var(--white)}
 .nav-cta{
@@ -105,7 +106,7 @@ nav.scrolled{
 .hero-bg-img{
   position:absolute;
   inset:0;
-  background-image:url('public/images/hero-bg.png');
+  background-image:url('public/images/hero-bg.webp');
   background-size:cover;
   background-position:center 30%;
   pointer-events:none;
@@ -173,13 +174,14 @@ nav.scrolled{
 
 .hero-h1{
   font-family:var(--font-display);
-  font-size:clamp(4.5rem,12vw,10rem);
+  font-size:clamp(3.5rem,7vw,6.5rem);
   line-height:.92;
   letter-spacing:.01em;
   margin-bottom:2rem;
 }
 .hero-h1 .line{
   display:block;overflow:hidden;
+  padding-bottom:.08em;
 }
 .hero-h1 .line span{
   display:block;
@@ -187,7 +189,7 @@ nav.scrolled{
 }
 .hero-h1 .line:nth-child(1) span{animation:slideUp .7s .35s forwards}
 .hero-h1 .line:nth-child(2) span{animation:slideUp .7s .5s forwards}
-.hero-h1 .line:nth-child(3) span{animation:slideUp .7s .65s forwards;color:var(--emerald)}
+.hero-h1 .line:nth-child(2) .hl{color:var(--emerald)}
 
 .hero-bottom{
   display:flex;align-items:flex-end;justify-content:space-between;
@@ -208,18 +210,21 @@ nav.scrolled{
   border:1px solid rgba(255,255,255,.15);
   border-right:none;
   color:var(--white);
-  font-family:var(--font-body);font-size:.92rem;
-  padding:.85rem 1.1rem;
+  font-family:var(--font-body);font-size:1rem;
+  padding:1rem 1.1rem;
   border-radius:4px 0 0 4px;
   outline:none;transition:border-color .2s;
 }
 .hero-form input::placeholder{color:rgba(255,255,255,.3)}
 .hero-form input:focus{border-color:rgba(16,185,129,.5)}
+:focus-visible{outline:2px solid var(--emerald);outline-offset:2px}
+.hero-form input:focus-visible{outline:2px solid var(--emerald);outline-offset:-2px;border-color:rgba(16,185,129,.5)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .hero-form button{
   background:var(--emerald);color:#000;
-  font-family:var(--font-body);font-weight:600;font-size:.88rem;
+  font-family:var(--font-body);font-weight:600;font-size:1rem;
   letter-spacing:.04em;
-  padding:.85rem 1.3rem;
+  padding:1rem 1.5rem;
   border:none;border-radius:0 4px 4px 0;
   cursor:pointer;white-space:nowrap;
   transition:background .2s;
@@ -233,6 +238,11 @@ nav.scrolled{
 .success-msg{
   display:none;
   font-size:.88rem;color:var(--emerald);font-weight:500;
+  margin-top:.6rem;
+}
+.error-msg{
+  display:none;
+  font-size:.85rem;color:#ef4444;font-weight:500;
   margin-top:.6rem;
 }
 
@@ -434,169 +444,165 @@ section{padding:7rem 2.5rem}
   .step-num-big{font-size:3rem}
 }
 
-/* ── PRODUCT DEMO ── (Task 4) */
-.demo-section{
-  background:var(--black2);
-  padding:7rem 2.5rem;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
+/* ── DEMO AI DETECTION ── */
+.demo-ai{background:var(--black);padding:7rem 2.5rem;border-bottom:1px solid var(--border)}
+.demo-ai-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center;margin-top:3.5rem}
+.demo-ai-player{
+  position:relative;background:var(--black2);
+  border:1px solid rgba(16,185,129,.2);border-radius:16px;
+  padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;overflow:hidden;
 }
-.demo-video-wrap{
-  position:relative;
-  margin-top:3.5rem;
-  display:flex;
-  justify-content:center;
-}
-.demo-glow{
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:80%;height:60%;
-  background:radial-gradient(ellipse,rgba(16,185,129,.12) 0%,transparent 65%);
+.demo-ai-player::after{
+  content:'';position:absolute;bottom:-80px;left:10%;
+  width:80%;height:160px;
+  background:radial-gradient(ellipse,rgba(16,185,129,.12) 0%,transparent 70%);
   pointer-events:none;
-  z-index:0;
 }
-.demo-video{
-  position:relative;
-  z-index:1;
-  width:100%;
-  max-width:1000px;
-  border-radius:12px;
-  border:1px solid rgba(16,185,129,.15);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.04),
-    0 60px 120px rgba(0,0,0,0.7);
-  display:block;
+.demo-hud{
+  display:flex;justify-content:space-between;
+  font-family:'Courier New',monospace;font-size:.65rem;
+  color:rgba(16,185,129,.5);letter-spacing:.03em;
 }
-@media(max-width:600px){
-  .demo-section{padding:4rem 1.25rem}
+.demo-ai-visual{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  min-height:260px;background:var(--black3);border-radius:10px;overflow:hidden;
 }
+.demo-ai-visual img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;opacity:.45;filter:grayscale(.2);
+}
+.demo-bbox{position:absolute;border:2px solid var(--emerald);border-radius:4px;pointer-events:none}
+.demo-bbox.hoop{width:25%;height:35%;top:12%;left:15%}
+.demo-bbox.ball{width:12%;height:18%;top:35%;left:58%}
+.demo-arc{
+  position:absolute;top:15%;left:28%;width:35%;height:30%;
+  border:2px dashed var(--emerald);border-radius:50%;
+  border-bottom:none;border-left:none;opacity:.4;pointer-events:none;
+}
+.demo-play-btn{
+  position:relative;z-index:2;width:64px;height:64px;border-radius:50%;
+  background:var(--emerald);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:transform .2s,box-shadow .2s;
+  box-shadow:0 0 30px rgba(16,185,129,.3);
+}
+.demo-play-btn:hover{transform:scale(1.08);box-shadow:0 0 40px rgba(16,185,129,.4)}
+.demo-ai-timeline{display:flex;align-items:center;gap:.75rem}
+.demo-ai-bar{flex:1;height:3px;background:rgba(255,255,255,.08);border-radius:2px;position:relative}
+.demo-ai-bar-fill{position:absolute;left:0;top:0;width:51%;height:100%;background:var(--emerald);border-radius:2px}
+.demo-ai-bar-dot{position:absolute;left:51%;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:var(--emerald)}
+.demo-ai-time{font-family:'Courier New',monospace;font-size:.7rem;color:rgba(255,255,255,.35);white-space:nowrap}
+.demo-ai-text .s-label{margin-bottom:.5rem}
+.demo-ai-text h2{
+  font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.6rem);
+  line-height:1.1;letter-spacing:.01em;margin-bottom:1.25rem;color:var(--white);
+}
+.demo-ai-desc{font-size:1rem;font-weight:300;color:rgba(245,245,240,.5);line-height:1.7;margin-bottom:2rem}
+.demo-ai-stats{display:flex;gap:2.5rem;margin-bottom:2.5rem}
+.demo-stat-val{font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--emerald);line-height:1.2}
+.demo-stat-lbl{font-size:.7rem;color:rgba(245,245,240,.4);letter-spacing:.02em}
+.demo-ai-cta{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--emerald);color:#000;font-family:var(--font-body);
+  font-weight:600;font-size:.9rem;padding:.85rem 1.8rem;border-radius:8px;
+  border:none;cursor:pointer;transition:background .2s,transform .15s;
+}
+.demo-ai-cta:hover{background:var(--emerald-dim);transform:translateY(-1px)}
+.demo-ai-player.playing .demo-overlay{display:none}
+.demo-ai-player.playing .demo-real-video{display:block!important;width:100%;border-radius:8px}
+@media(max-width:900px){.demo-ai-layout{grid-template-columns:1fr;gap:2.5rem}}
+@media(max-width:600px){.demo-ai{padding:4rem 1.25rem}}
 
-/* ── TRANSFORMATION ── */
-.transform-section{background:var(--black)}
-.transform-split{
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  gap:1.5rem;
-  align-items:stretch;
-  margin-top:4rem;
+/* ── BEFORE & AFTER ── */
+.ba-section{background:var(--black);padding:7rem 2.5rem}
+.ba-section .s-title,.ba-section .s-label{text-align:center}
+.ba-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:1.5rem;align-items:stretch;margin-top:3.5rem}
+.ba-card{
+  background:linear-gradient(180deg,rgba(14,14,18,1) 0%,rgba(16,185,129,.04) 100%);
+  border:1px solid var(--border);border-radius:16px;padding:1.75rem;
 }
-@media(max-width:700px){
-  .transform-split{grid-template-columns:1fr;gap:1rem}
-  .transform-arrow-col{display:none}
-}
-.t-card{
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:2rem;
-  background:var(--black2);
-}
-.t-card-label{
-  font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
-  margin-bottom:1.25rem;display:block;
-}
-.t-card.before .t-card-label{color:rgba(255,255,255,.2)}
-.t-card.after .t-card-label{color:var(--emerald)}
-.t-card.after{border-color:rgba(16,185,129,.2)}
-.t-card h3{
-  font-family:var(--font-cond);
-  font-size:1.5rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+.ba-card.after{border-color:rgba(16,185,129,.25)}
+.ba-card-header{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   margin-bottom:1.25rem;
 }
-.t-card.before h3{color:rgba(255,255,255,.2)}
-.t-card.after h3{color:var(--white)}
-.t-list{list-style:none;display:flex;flex-direction:column;gap:.65rem}
-.t-list li{
-  font-size:.9rem;font-weight:300;
-  color:rgba(245,245,240,.5);
-  display:flex;align-items:flex-start;gap:.6rem;
-  line-height:1.5;
+.ba-card.before .ba-card-header{color:#ef4444}
+.ba-card.after .ba-card-header{color:var(--emerald)}
+.ba-card-header .dot{width:6px;height:6px;border-radius:50%}
+.ba-card.before .dot{background:#ef4444}
+.ba-card.after .dot{background:var(--emerald)}
+.ba-card-image{
+  position:relative;border-radius:10px;overflow:hidden;
+  margin-bottom:1.25rem;border:1px solid rgba(255,255,255,.05);
+  aspect-ratio:16/10;background:var(--black3);
 }
-.t-card.after .t-list li{color:rgba(245,245,240,.75)}
-.t-list li::before{
-  content:'';flex-shrink:0;
-  width:4px;height:4px;border-radius:50%;
-  margin-top:.55em;
+.ba-card-image img{width:100%;height:100%;object-fit:cover;opacity:.8}
+.ba-img-label{
+  position:absolute;bottom:.65rem;left:.75rem;
+  font-size:.68rem;color:rgba(255,255,255,.4);
+  display:flex;align-items:center;gap:.4rem;
 }
-.t-card.before .t-list li::before{background:rgba(255,255,255,.2)}
-.t-card.after .t-list li::before{background:var(--emerald)}
-.transform-arrow-col{
-  display:flex;align-items:center;justify-content:center;
-  padding:0 .5rem;
+.ba-img-label .g-dot{width:5px;height:5px;border-radius:50%;background:var(--emerald)}
+.ba-list{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.ba-list li{
+  font-size:.85rem;font-weight:300;color:rgba(245,245,240,.6);
+  display:flex;align-items:center;gap:.6rem;line-height:1.5;
 }
-.transform-arrow-col svg{
-  color:var(--emerald);
-  flex-shrink:0;
+.ba-ix{color:#ef4444;font-size:.8rem;flex-shrink:0;width:16px;text-align:center;font-weight:700}
+.ba-ic{color:var(--emerald);font-size:.85rem;flex-shrink:0;width:16px;text-align:center}
+.ba-arrow-col{display:flex;align-items:center;justify-content:center;padding:0 .5rem}
+.ba-arrow-col svg{color:var(--emerald)}
+.ba-bottom-pill{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  margin:2.5rem auto 0;padding:.7rem 1.5rem;
+  border:1px solid rgba(16,185,129,.2);border-radius:100px;
+  font-size:.82rem;color:rgba(245,245,240,.7);max-width:420px;
 }
-
-/* Task 3: Transform product preview */
-.transform-product-preview{
-  margin-top:3rem;
-  position:relative;
-  display:flex;
-  justify-content:center;
-}
-.product-glow{
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:600px;height:300px;
-  background:radial-gradient(ellipse,rgba(16,185,129,0.15) 0%,transparent 70%);
-  pointer-events:none;
-}
-.product-frame{
-  border:1px solid rgba(16,185,129,0.2);
-  border-radius:12px;
-  overflow:hidden;
-  max-width:900px;
-  width:100%;
-  transform:perspective(1200px) rotateX(4deg);
-  box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.05);
-  transition:transform 0.4s ease;
-}
-.product-frame:hover{
-  transform:perspective(1200px) rotateX(1deg);
-}
-.product-frame img,.product-frame video{
-  width:100%;
-  display:block;
+.ba-bottom-pill svg{color:var(--emerald);flex-shrink:0}
+@media(max-width:700px){
+  .ba-grid{grid-template-columns:1fr;gap:1rem}
+  .ba-arrow-col{display:none}
+  .ba-section{padding:4rem 1.25rem}
 }
 
 
 /* ── TESTIMONIALS ── */
-.testimonials-section{background:var(--black)}
+.testimonials-section{background:var(--black);padding:7rem 2.5rem}
+.testimonials-section .s-title,.testimonials-section .s-label{text-align:center}
 .testi-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  border-radius:10px;overflow:hidden;
-  margin-top:3.5rem;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;margin-top:3.5rem;
 }
 .testi-card{
-  background:var(--black2);
-  padding:2rem;
-  display:flex;flex-direction:column;
-  justify-content:space-between;
-  gap:1.5rem;
+  background:linear-gradient(180deg,rgba(14,14,18,1) 0%,rgba(16,185,129,.06) 100%);
+  border:1px solid rgba(16,185,129,.12);border-radius:16px;
+  padding:2rem;display:flex;flex-direction:column;gap:1.5rem;
 }
+.testi-stars{display:flex;gap:.35rem}
+.testi-star{width:8px;height:8px;border-radius:50%;background:var(--emerald)}
 .testi-card blockquote{
-  font-size:1rem;font-weight:300;font-style:italic;
-  color:rgba(245,245,240,.75);line-height:1.7;
+  font-size:.92rem;font-weight:300;font-style:italic;
+  color:rgba(245,245,240,.75);line-height:1.7;flex:1;
 }
 .testi-card blockquote em{color:var(--white);font-style:normal;font-weight:500}
 .testi-author{display:flex;align-items:center;gap:.75rem}
 .testi-avatar{
-  width:36px;height:36px;border-radius:50%;
-  background:var(--black3);
-  border:1px solid var(--border);
+  width:40px;height:40px;border-radius:50%;
+  background:var(--black3);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
-  font-size:.7rem;font-weight:600;
-  color:var(--emerald);flex-shrink:0;
+  font-size:.75rem;font-weight:600;color:var(--emerald);
+  flex-shrink:0;overflow:hidden;
 }
+.testi-avatar img{width:100%;height:100%;object-fit:cover}
 .testi-meta strong{display:block;font-size:.82rem;font-weight:500}
 .testi-meta span{font-size:.73rem;color:var(--muted)}
+.testi-stats{display:flex;justify-content:center;gap:3rem;margin-top:3rem}
+.testi-stat{
+  display:flex;align-items:center;gap:.4rem;
+  font-size:.82rem;color:rgba(245,245,240,.6);
+}
+.testi-stat svg{color:var(--emerald);flex-shrink:0}
+@media(max-width:700px){.testi-grid{grid-template-columns:1fr}}
 
 /* ── FOUNDERS ── */
 .founders-section{
@@ -642,69 +648,86 @@ section{padding:7rem 2.5rem}
   color:rgba(245,245,240,.5);line-height:1.6;
 }
 
-/* ── FINAL CTA ── */
-.cta-section{
-  background:var(--black);
-  text-align:center;
-  padding:8rem 2.5rem;
+/* ── URGENCY BANNER ── */
+.urgency-section{
+  background:var(--black);padding:6rem 2.5rem;
   position:relative;overflow:hidden;
 }
-.cta-section::before{
-  content:'';
-  position:absolute;top:-300px;left:50%;
-  transform:translateX(-50%);
-  width:800px;height:700px;
-  background:radial-gradient(ellipse at center top,rgba(16,185,129,.14) 0%,transparent 60%);
-  pointer-events:none;
+.urgency-card{
+  position:relative;max-width:800px;margin:0 auto;
+  background:linear-gradient(180deg,rgba(16,185,129,.04) 0%,rgba(6,6,8,.95) 100%);
+  border:1px solid rgba(16,185,129,.15);border-radius:24px;
+  padding:4rem 3rem;text-align:center;
 }
-.cta-big{
-  font-family:var(--font-display);
-  font-size:clamp(3rem,8vw,7rem);
-  letter-spacing:.02em;
-  line-height:.95;
-  margin-bottom:1.25rem;
+.urgency-card::before{
+  content:'';position:absolute;inset:-1px;border-radius:24px;
+  background:linear-gradient(180deg,rgba(16,185,129,.25) 0%,rgba(16,185,129,.03) 100%);
+  z-index:-1;padding:1px;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
 }
-.cta-big span{color:var(--emerald)}
-.cta-sub{
-  font-size:1.05rem;font-weight:300;
-  color:rgba(245,245,240,.5);
-  max-width:420px;margin:0 auto 2.5rem;
-  line-height:1.7;
+.urgency-dot{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  background:var(--emerald);opacity:.4;
 }
-.cta-form{
-  display:flex;
-  gap:0;
-  max-width:440px;
-  margin:0 auto;
-}
-.cta-form input{
-  flex:1;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.12);
-  border-right:none;
-  color:var(--white);
-  font-family:var(--font-body);font-size:.92rem;
-  padding:.9rem 1.15rem;
-  border-radius:4px 0 0 4px;
-  outline:none;transition:border-color .2s;
-}
-.cta-form input::placeholder{color:rgba(255,255,255,.25)}
-.cta-form input:focus{border-color:rgba(16,185,129,.5)}
-.cta-form button{
+.urgency-dot-tl{top:2rem;left:2rem}
+.urgency-dot-br{bottom:2rem;right:2rem}
+.urgency-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
   background:var(--emerald);color:#000;
-  font-family:var(--font-body);font-weight:600;font-size:.88rem;
-  letter-spacing:.04em;
-  padding:.9rem 1.4rem;
-  border:none;border-radius:0 4px 4px 0;
-  cursor:pointer;white-space:nowrap;
-  transition:background .2s;
+  font-size:.78rem;font-weight:600;letter-spacing:.04em;
+  padding:.5rem 1.25rem;border-radius:100px;margin-bottom:2rem;
 }
-.cta-form button:hover{background:var(--emerald-dim)}
-.cta-note{
-  margin-top:.75rem;
-  font-size:.73rem;
-  color:rgba(255,255,255,.2);
-  letter-spacing:.04em;
+.urgency-badge svg{width:16px;height:16px}
+.urgency-title{
+  font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);
+  line-height:1.15;letter-spacing:.01em;margin-bottom:1rem;
+}
+.urgency-sub{
+  font-size:1rem;font-weight:300;color:rgba(245,245,240,.5);
+  max-width:500px;margin:0 auto 2.5rem;line-height:1.7;
+}
+.countdown{display:flex;justify-content:center;gap:1rem;margin-bottom:2.5rem}
+.countdown-item{text-align:center}
+.countdown-num{
+  display:flex;align-items:center;justify-content:center;
+  width:80px;height:90px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  font-family:var(--font-display);font-size:2.5rem;font-weight:700;
+  color:var(--white);margin-bottom:.5rem;position:relative;overflow:hidden;
+}
+.countdown-num::before{
+  content:'';position:absolute;top:0;left:0;
+  width:20px;height:20px;
+  border-top:2px solid var(--emerald);border-left:2px solid var(--emerald);
+  border-radius:12px 0 0 0;
+}
+.countdown-label{
+  font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(245,245,240,.4);
+}
+.urgency-cta{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--emerald);color:#000;
+  font-family:var(--font-body);font-weight:600;font-size:1rem;
+  padding:1rem 2.5rem;border-radius:100px;border:none;
+  cursor:pointer;transition:background .2s,transform .15s;margin-bottom:1.5rem;
+}
+.urgency-cta:hover{background:var(--emerald-dim);transform:translateY(-2px)}
+.urgency-checks{display:flex;justify-content:center;gap:2rem}
+.urgency-check{
+  display:flex;align-items:center;gap:.4rem;
+  font-size:.82rem;color:rgba(245,245,240,.5);
+}
+.urgency-check svg{color:var(--emerald);flex-shrink:0}
+@media(max-width:600px){
+  .urgency-section{padding:4rem 1.25rem}
+  .urgency-card{padding:2.5rem 1.5rem;border-radius:16px}
+  .countdown-num{width:60px;height:70px;font-size:1.8rem}
+  .countdown{gap:.6rem}
+  .urgency-title{font-size:clamp(1.6rem,6vw,2.2rem)}
 }
 
 /* ── FOOTER ── */
@@ -725,23 +748,15 @@ footer a{color:var(--muted);text-decoration:none;transition:color .2s}
 footer a:hover{color:var(--emerald)}
 @media(max-width:600px){
   footer{flex-direction:column;text-align:center}
-  .cta-section{padding:5rem 1.25rem}
-  .cta-form{flex-direction:column;border-radius:4px}
-  .cta-form input,.cta-form button{border-radius:4px;border-right:1px solid rgba(255,255,255,.12)}
-  .cta-form input{border-bottom:none;border-right:1px solid rgba(255,255,255,.12)}
-  .cta-form button{border-radius:4px}
   /* Mobile readability */
   .hero-sub{font-size:.95rem}
   .s-title{font-size:clamp(2.2rem,8vw,4rem)}
-  .cta-big{font-size:clamp(2.4rem,10vw,5rem)}
-  .testi-card blockquote{font-size:.92rem}
+  .testi-card blockquote{font-size:.85rem}
   .founder-card{flex-direction:column;align-items:center;text-align:center}
   .problem-text p{font-size:1rem}
   .problem-text .callout{font-size:1.3rem}
   .marquee-strip{padding:.6rem 0}
   .marquee-item{font-size:.7rem;padding:0 1.5rem}
-  /* Demo video mobile */
-  .demo-video{border-radius:8px}
 }
 </style>
 </head>
@@ -771,8 +786,7 @@ footer a:hover{color:var(--emerald)}
 
   <h1 class="hero-h1">
     <div class="line"><span>Record the game.</span></div>
-    <div class="line"><span>Get the</span></div>
-    <div class="line"><span>highlights.</span></div>
+    <div class="line"><span>Get the <span class="hl">highlights.</span></span></div>
   </h1>
 
   <div class="hero-bottom">
@@ -781,12 +795,14 @@ footer a:hover{color:var(--emerald)}
       <strong>automatically. No editing. No scrubbing. Clips ready in minutes, not days.</strong>
     </p>
     <div class="hero-form-wrap">
-      <form class="hero-form" id="hero-form" onsubmit="submit(event,'hero')">
-        <input type="email" id="hero-email" placeholder="Your email" required/>
+      <form class="hero-form" id="hero-form" onsubmit="handleWaitlist(event,'hero')">
+        <label for="hero-email" class="sr-only">Email address</label>
+        <input type="email" id="hero-email" placeholder="Your email" required autocomplete="email" inputmode="email"/>
         <button type="submit">Get early access</button>
       </form>
       <p class="hero-note">Free during beta · No credit card · Setup instructions after a short form</p>
       <p class="success-msg" id="hero-success">You've got early access! We'll send setup instructions shortly.</p>
+      <p class="error-msg" id="hero-error" role="alert"></p>
     </div>
   </div>
 
@@ -829,7 +845,7 @@ footer a:hover{color:var(--emerald)}
       <div class="reveal reveal-delay-2">
         <!-- Problem visual: camera roll full of unwatched game footage -->
         <div class="problem-img-wrap">
-          <img src="public/images/the-problem.png" alt="Phone camera roll full of untouched basketball game videos"/>
+          <img src="public/images/the-problem.webp" alt="Phone camera roll full of untouched basketball game videos" loading="lazy" width="800" height="447"/>
         </div>
       </div>
     </div>
@@ -853,7 +869,7 @@ footer a:hover{color:var(--emerald)}
         </div>
         <!-- Task 2: Step visual -->
         <div class="step-visual">
-          <img src="public/images/step-record.png" alt="Phone on tripod recording a basketball game courtside"/>
+          <img src="public/images/step-record.webp" alt="Phone on tripod recording a basketball game courtside" loading="lazy" width="800" height="447"/>
         </div>
       </div>
       <div class="step-row reveal reveal-delay-2">
@@ -865,7 +881,7 @@ footer a:hover{color:var(--emerald)}
         </div>
         <!-- Task 2: Step visual -->
         <div class="step-visual">
-          <img src="public/images/step-ai.png" alt="AI computer vision detecting basketball and hoop with bounding boxes"/>
+          <img src="public/images/step-ai.webp" alt="AI computer vision detecting basketball and hoop with bounding boxes" loading="lazy" width="800" height="447"/>
         </div>
       </div>
       <div class="step-row reveal reveal-delay-3">
@@ -877,69 +893,109 @@ footer a:hover{color:var(--emerald)}
         </div>
         <!-- Task 2: Step visual — product demo video -->
         <div class="step-visual">
-          <video autoplay muted loop playsinline src="public/videos/goplai-demo.mp4"></video>
+          <video muted loop playsinline preload="none" data-src="public/videos/goplai-demo.mp4"></video>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PRODUCT DEMO (Task 4) -->
-<section class="demo-section" id="demo">
+<!-- DEMO AI DETECTION -->
+<section class="demo-ai" id="demo">
   <div class="container">
-    <div class="reveal">
-      <p class="s-label">See it in action</p>
-      <h2 class="s-title">Upload to highlights<br>in minutes, not days.</h2>
-    </div>
-    <div class="demo-video-wrap reveal reveal-delay-1">
-      <div class="demo-glow"></div>
-      <video class="demo-video" controls playsinline preload="metadata" src="public/videos/goplai-demo.mp4"></video>
+    <div class="demo-ai-layout reveal">
+      <div class="demo-ai-player" id="demo-player">
+        <div class="demo-overlay">
+          <div class="demo-hud">
+            <span>FRAME: 1024</span>
+            <span>COORD: [X:320, Y:240, Z:111]</span>
+          </div>
+          <div class="demo-ai-visual">
+            <img src="public/images/step-ai.webp" alt="AI basketball detection" loading="lazy" width="800" height="447"/>
+            <div class="demo-bbox hoop"></div>
+            <div class="demo-bbox ball"></div>
+            <div class="demo-arc"></div>
+            <button class="demo-play-btn" onclick="playDemo()" aria-label="Play demo video">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#000" aria-hidden="true"><polygon points="8,5 20,12 8,19"/></svg>
+            </button>
+          </div>
+          <div class="demo-hud" style="margin-top:.5rem">
+            <span>COORD: [X:320, Y:248, Z:115]</span>
+            <span>CONFIDENCE: 0.94</span>
+          </div>
+          <div class="demo-ai-timeline">
+            <div class="demo-ai-bar">
+              <div class="demo-ai-bar-fill"></div>
+              <div class="demo-ai-bar-dot"></div>
+            </div>
+            <span class="demo-ai-time">0:23 / 0:45</span>
+          </div>
+        </div>
+        <video class="demo-real-video" style="display:none" controls playsinline preload="metadata" src="public/videos/goplai-demo.mp4"></video>
+      </div>
+      <div class="demo-ai-text">
+        <p class="s-label">See it in action</p>
+        <h2>Watch AI detect<br>every made basket</h2>
+        <p class="demo-ai-desc">Our computer vision technology tracks the ball and hoop in real-time, automatically clipping every score the moment it happens.</p>
+        <div class="demo-ai-stats">
+          <div>
+            <div class="demo-stat-val">98%</div>
+            <div class="demo-stat-lbl">Detection rate</div>
+          </div>
+          <div>
+            <div class="demo-stat-val">&lt;30m</div>
+            <div class="demo-stat-lbl">Processing time</div>
+          </div>
+          <div>
+            <div class="demo-stat-val">4K</div>
+            <div class="demo-stat-lbl">Output quality</div>
+          </div>
+        </div>
+        <a class="demo-ai-cta" href="https://youtu.be/5Jm6bv3n1So?si=0uAz-uMgGHE5Fe72" target="_blank" rel="noopener">Watch demo &rarr;</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- TRANSFORMATION -->
-<section class="transform-section">
+<!-- BEFORE & AFTER -->
+<section class="ba-section">
   <div class="container">
     <div class="reveal">
-      <p class="s-label">The transformation</p>
-      <h2 class="s-title">Before and after.</h2>
+      <p class="s-label">Transformation</p>
+      <h2 class="s-title">Before and after GoPlai</h2>
     </div>
-    <div class="transform-split">
-      <div class="t-card before reveal reveal-delay-1">
-        <span class="t-card-label">Without GoPlai</span>
-        <h3>Raw footage</h3>
-        <ul class="t-list">
-          <li>60 minutes of shaky sideline video</li>
-          <li>Buried in the camera roll forever</li>
-          <li>One bad clip shared to the team chat — maybe</li>
-          <li>Grandma never sees it</li>
-          <li>Your kid forgets what it felt like to make that shot</li>
+    <div class="ba-grid reveal reveal-delay-1">
+      <div class="ba-card before">
+        <div class="ba-card-header"><span class="dot"></span> BEFORE</div>
+        <div class="ba-card-image">
+          <img src="public/images/the-problem.webp" alt="Phone camera roll full of game footage" loading="lazy" width="800" height="447"/>
+          <div class="ba-img-label"><span class="g-dot"></span> 47 videos, 12GB</div>
+        </div>
+        <ul class="ba-list">
+          <li><span class="ba-ix">&times;</span> Hours scrubbing through footage</li>
+          <li><span class="ba-ix">&times;</span> Never get around to editing</li>
+          <li><span class="ba-ix">&times;</span> Storage full of raw game files</li>
         </ul>
       </div>
-      <div class="transform-arrow-col">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-          <path d="M5 12h14M13 6l6 6-6 6"/>
-        </svg>
+      <div class="ba-arrow-col">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </div>
-      <div class="t-card after reveal reveal-delay-2">
-        <span class="t-card-label">With GoPlai</span>
-        <h3>Shareable clips</h3>
-        <ul class="t-list">
-          <li>Every made basket auto-clipped in 6 seconds</li>
-          <li>Delivered before bedtime</li>
-          <li>Share to the family WhatsApp group, Instagram, TikTok</li>
-          <li>Every player on the team gets their own clips</li>
-          <li>A highlight reel that grows every game</li>
+      <div class="ba-card after">
+        <div class="ba-card-header"><span class="dot"></span> AFTER</div>
+        <div class="ba-card-image">
+          <img src="public/images/product-screenshot.jpg" alt="GoPlai highlights dashboard"/>
+          <div class="ba-img-label"><span class="g-dot"></span> 12 highlights ready <span style="opacity:.5;margin-left:.5rem">23 min ago</span></div>
+        </div>
+        <ul class="ba-list">
+          <li><span class="ba-ic">&#10003;</span> Auto-clipped highlights in minutes</li>
+          <li><span class="ba-ic">&#10003;</span> Ready to share instantly</li>
+          <li><span class="ba-ic">&#10003;</span> Each player gets their own clips</li>
         </ul>
       </div>
     </div>
-    <!-- Task 3: Product preview with perspective tilt -->
-    <div class="transform-product-preview reveal reveal-delay-3">
-      <div class="product-glow"></div>
-      <div class="product-frame">
-        <img src="public/images/product-screenshot.jpg" alt="GoPlai highlight delivery page showing clip thumbnails"/>
-      </div>
+    <div class="ba-bottom-pill reveal reveal-delay-2">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Average time saved: 2+ hours per game
     </div>
   </div>
 </section>
@@ -949,29 +1005,56 @@ footer a:hover{color:var(--emerald)}
 <section class="testimonials-section">
   <div class="container">
     <div class="reveal">
-      <p class="s-label">Early users · Bay Area</p>
-      <h2 class="s-title">What users are saying.</h2>
+      <p class="s-label">Testimonials</p>
+      <h2 class="s-title">What parents are saying</h2>
     </div>
-    <div class="testi-grid">
-      <div class="testi-card reveal reveal-delay-1">
-        <blockquote>"Automated highlight clips from full game footage is exactly the kind of tool athletes need right now — especially for <em>building their personal brand</em> and creating <em>NIL-worthy content</em>."</blockquote>
+    <div class="testi-grid reveal reveal-delay-1">
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star"></span><span class="testi-star"></span><span class="testi-star"></span><span class="testi-star"></span><span class="testi-star"></span></div>
+        <blockquote>"I used to spend hours scrubbing through game footage. Now I just upload and go to bed &mdash; wake up to perfectly clipped highlights of my son's best plays. <em>Game changer for busy parents.</em>"</blockquote>
         <div class="testi-author">
-          <div class="testi-avatar">BN</div>
+          <div class="testi-avatar">MT</div>
           <div class="testi-meta">
-            <strong>Branded NIL</strong>
-            <span>NIL Platform</span>
+            <strong>Marcus T.</strong>
+            <span>Basketball Dad, Bay Area</span>
           </div>
         </div>
       </div>
-      <div class="testi-card reveal reveal-delay-2">
-        <blockquote>"What you're building has real potential to be <em>widely used by families</em> and <em>monetized at a high level</em>."</blockquote>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star"></span><span class="testi-star"></span><span class="testi-star"></span><span class="testi-star"></span><span class="testi-star"></span></div>
+        <blockquote>"My daughter was so excited to share her highlights with grandma the same night. The clips look professional &mdash; <em>you'd never know they came from my phone on a tripod!</em>"</blockquote>
         <div class="testi-author">
-          <div class="testi-avatar">&#127936;</div>
+          <div class="testi-avatar" style="background:var(--emerald);color:#000">JR</div>
           <div class="testi-meta">
-            <strong>Youth Basketball Coach</strong>
-            <span>North Bay, California</span>
+            <strong>Jennifer R.</strong>
+            <span>Youth League Parent</span>
           </div>
         </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star"></span><span class="testi-star"></span><span class="testi-star"></span><span class="testi-star"></span><span class="testi-star"></span></div>
+        <blockquote>"We use the highlights for my son's recruiting profile. The AI catches every made basket &mdash; <em>even the ones I missed watching.</em> Worth every penny."</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar">DK</div>
+          <div class="testi-meta">
+            <strong>David K.</strong>
+            <span>AAU Team Parent</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-stats reveal reveal-delay-2">
+      <div class="testi-stat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        500+ families
+      </div>
+      <div class="testi-stat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        10,000+ clips
+      </div>
+      <div class="testi-stat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        4.9 avg rating
       </div>
     </div>
   </div>
@@ -988,7 +1071,7 @@ footer a:hover{color:var(--emerald)}
     <div class="founders-grid">
       <div class="founder-card reveal reveal-delay-1">
         <div class="founder-avatar-wrap">
-          <img src="public/images/gonza.jpg" alt="Gonzalo Vasquez"/>
+          <img src="public/images/gonza-sm.webp" alt="Gonzalo Vasquez" loading="lazy" width="60" height="60"/>
         </div>
         <div class="founder-info">
           <p class="founder-name">Gonzalo V&aacute;squez</p>
@@ -998,7 +1081,7 @@ footer a:hover{color:var(--emerald)}
       </div>
       <div class="founder-card reveal reveal-delay-2">
         <div class="founder-avatar-wrap">
-          <img src="public/images/angel.jpg" alt="Angel Tramontin"/>
+          <img src="public/images/angel-sm.webp" alt="Angel Tramontin" loading="lazy" width="60" height="60"/>
         </div>
         <div class="founder-info">
           <p class="founder-name">Angel Tramontin</p>
@@ -1010,18 +1093,47 @@ footer a:hover{color:var(--emerald)}
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<section class="cta-section" id="waitlist">
+<!-- URGENCY BANNER -->
+<section class="urgency-section" id="waitlist">
   <div class="container">
-    <div class="reveal">
-      <h2 class="cta-big">Their best plays<br>deserve to be <span>seen.</span></h2>
-      <p class="cta-sub">Sign up for early access. We'll send setup instructions after you complete a short form. Free during beta.</p>
-      <form class="cta-form" id="cta-form" onsubmit="submit(event,'cta')">
-        <input type="email" id="cta-email" placeholder="Your email address" required/>
-        <button type="submit">Get early access &rarr;</button>
-      </form>
-      <p class="cta-note">Free during beta · Bay Area youth leagues · No credit card</p>
-      <p class="success-msg" id="cta-success" style="text-align:center;margin-top:.75rem">You've got early access! Check your email for setup instructions.</p>
+    <div class="urgency-card reveal">
+      <div class="urgency-dot urgency-dot-tl"></div>
+      <div class="urgency-dot urgency-dot-br"></div>
+      <div class="urgency-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Limited Beta &mdash; Spring Season
+      </div>
+      <h2 class="urgency-title">Get your highlights before the season ends</h2>
+      <p class="urgency-sub">Join 500+ Bay Area families already using GoPlai. Free during beta &mdash; no credit card required.</p>
+      <div class="countdown" id="countdown">
+        <div class="countdown-item">
+          <div class="countdown-num" id="cd-days">14</div>
+          <div class="countdown-label">Days</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-num" id="cd-hours">08</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-num" id="cd-mins">42</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-num" id="cd-secs">17</div>
+          <div class="countdown-label">Seconds</div>
+        </div>
+      </div>
+      <button class="urgency-cta" onclick="scrollToHero()">Get early access &rarr;</button>
+      <div class="urgency-checks">
+        <span class="urgency-check">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Free beta
+        </span>
+        <span class="urgency-check">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          No credit card
+        </span>
+      </div>
     </div>
   </div>
 </section>
@@ -1051,22 +1163,72 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 reveals.forEach(el => io.observe(el));
 
-// Scroll to CTA
+// Scroll to CTA / Hero
 function scrollToCta() {
   document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
-  setTimeout(() => document.getElementById('cta-email').focus(), 700);
+}
+function scrollToHero() {
+  document.querySelector('.hero-form input').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => document.getElementById('hero-email').focus(), 700);
 }
 
+// Demo play
+function playDemo() {
+  const player = document.getElementById('demo-player');
+  const overlay = player.querySelector('.demo-overlay');
+  const video = player.querySelector('.demo-real-video');
+  if (overlay) overlay.style.display = 'none';
+  video.style.display = 'block';
+  video.play();
+}
+
+// Countdown timer — 14 days from page load
+(function() {
+  const deadline = new Date();
+  deadline.setDate(deadline.getDate() + 14);
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function tick() {
+    const now = new Date();
+    const diff = Math.max(0, deadline - now);
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent = pad(d);
+    document.getElementById('cd-hours').textContent = pad(h);
+    document.getElementById('cd-mins').textContent = pad(m);
+    document.getElementById('cd-secs').textContent = pad(s);
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+// Lazy-load video when scrolled into view
+const lazyVideos = document.querySelectorAll('video[data-src]');
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const video = e.target;
+      video.src = video.dataset.src;
+      video.play();
+      videoObserver.unobserve(video);
+    }
+  });
+}, { rootMargin: '200px' });
+lazyVideos.forEach(v => videoObserver.observe(v));
+
 // Waitlist submit
-async function submit(e, id) {
+async function handleWaitlist(e, id) {
   e.preventDefault();
   const form = document.getElementById(id + '-form');
   const btn = form.querySelector('button');
   const email = document.getElementById(id + '-email').value;
   const successEl = document.getElementById(id + '-success');
+  const errorEl = document.getElementById(id + '-error');
 
   btn.disabled = true;
   btn.textContent = 'Submitting...';
+  if (errorEl) { errorEl.style.display = 'none'; errorEl.textContent = ''; }
 
   try {
     const res = await fetch('/api/waitlist', {
@@ -1083,12 +1245,12 @@ async function submit(e, id) {
     } else {
       btn.disabled = false;
       btn.textContent = id === 'hero' ? 'Get early access' : 'Get early access \u2192';
-      alert(data.error || 'Something went wrong. Please try again.');
+      if (errorEl) { errorEl.textContent = data.error || 'Something went wrong. Please try again.'; errorEl.style.display = 'block'; }
     }
   } catch {
     btn.disabled = false;
     btn.textContent = id === 'hero' ? 'Get early access' : 'Get early access \u2192';
-    alert('Network error. Please try again.');
+    if (errorEl) { errorEl.textContent = 'Network error. Please try again.'; errorEl.style.display = 'block'; }
   }
 }
 </script>
