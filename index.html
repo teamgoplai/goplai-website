@@ -1275,5 +1275,31 @@ async function handleWaitlist(e, id) {
   }
 }
 </script>
+<script>
+// Page view tracking — fires once per session, skips bots
+(function(){
+  if (sessionStorage.getItem('pv')) return;
+  if (/bot|crawl|spider|slurp|facebookexternalhit/i.test(navigator.userAgent)) return;
+  sessionStorage.setItem('pv','1');
+  var p = new URLSearchParams(location.search);
+  var body = JSON.stringify({
+    path: location.pathname,
+    referrer: document.referrer || null,
+    utm_source: p.get('utm_source') || null,
+    utm_medium: p.get('utm_medium') || null,
+    utm_campaign: p.get('utm_campaign') || null
+  });
+  fetch('https://cajdlgfdesedrkdozecb.supabase.co/rest/v1/page_views', {
+    method: 'POST',
+    headers: {
+      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhamRsZ2ZkZXNlZHJrZG96ZWNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTk0MDksImV4cCI6MjA5MDYzNTQwOX0.MY40agAjjM7xdYaVWaCFSOkRoqzC_OW1OM3vhMEjm8Y',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhamRsZ2ZkZXNlZHJrZG96ZWNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTk0MDksImV4cCI6MjA5MDYzNTQwOX0.MY40agAjjM7xdYaVWaCFSOkRoqzC_OW1OM3vhMEjm8Y',
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
+    },
+    body: body
+  }).catch(function(){});
+})();
+</script>
 </body>
 </html>
