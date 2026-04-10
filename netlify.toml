@@ -2,6 +2,12 @@
   publish = "."
   functions = "netlify/functions"
 
+# Waitlist drip emails — runs daily at 9am UTC (2am PT / 5am ET)
+# Gated by DRIP_ENABLED env var on Netlify. Without the flag, runs in
+# dry-run mode and logs candidates without sending.
+[functions."waitlist-drip"]
+  schedule = "0 9 * * *"
+
 [[headers]]
   for = "/*"
   [headers.values]
