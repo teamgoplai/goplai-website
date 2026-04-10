@@ -78,7 +78,7 @@ async function sendWelcomeEmail(email) {
       from: "Angel from GoPlai <angel@joingoplai.com>",
       reply_to: "angel@letsgoplai.com",
       to: [email],
-      subject: "You're on the GoPlai waitlist!",
+      subject: "You're in! Welcome to GoPlai",
       html: `
 <!DOCTYPE html>
 <html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
@@ -95,10 +95,10 @@ async function sendWelcomeEmail(email) {
   <!-- Hero Banner -->
   <tr><td style="background:linear-gradient(135deg,#10b981 0%,#0d9669 50%,#047857 100%);border-radius:12px;padding:40px 32px;text-align:center">
     <div style="display:inline-block;background:rgba(255,255,255,0.2);border-radius:20px;padding:6px 16px;margin-bottom:16px">
-      <span style="color:#fff;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase">&#10003; YOU'RE ON THE LIST</span>
+      <span style="color:#fff;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase">&#10003; EARLY ACCESS UNLOCKED</span>
     </div>
     <h1 style="color:#fff;font-size:32px;font-weight:800;margin:0 0 8px;line-height:1.2">You're in!</h1>
-    <p style="color:rgba(255,255,255,0.85);font-size:15px;margin:0;line-height:1.5">You're one of the first. Welcome to the inner circle.</p>
+    <p style="color:rgba(255,255,255,0.85);font-size:15px;margin:0;line-height:1.5">Watch the walkthrough below and upload your first game at letsgoplai.com.</p>
   </td></tr>
 
   <!-- Body -->
@@ -107,14 +107,23 @@ async function sendWelcomeEmail(email) {
     <p style="font-size:20px;font-weight:700;color:#1a1a1a;margin:0 0 16px;line-height:1.3">Hey &#128075;</p>
 
     <p style="font-size:15px;line-height:1.7;color:#444;margin:0 0 8px">
-      You just locked in early access to <strong>GoPlai</strong> &mdash; we're building the easiest way to turn a full game recording into a highlight reel, automatically.
+      You just locked in early access to <strong>GoPlai</strong> &mdash; the AI tool that turns your basketball game footage into highlight reels in minutes. No editing, no effort.
     </p>
-    <p style="font-size:15px;line-height:1.7;color:#444;margin:0 0 28px">
-      We're only letting in a small group to start so we can build this alongside real sports families. As an early member, your feedback will directly shape what we ship. We'll reach out personally when your spot is ready.
+    <p style="font-size:15px;line-height:1.7;color:#444;margin:0 0 24px">
+      I'm Angel, one of the founders, and I recorded a quick 2-minute walkthrough to get you started:
     </p>
 
+    <!-- Video Walkthrough Thumbnail -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 32px">
+    <tr><td align="center">
+      <a href="https://player.videodb.io/watch?v=LPJ7bya7sc0" target="_blank" style="text-decoration:none">
+        <img src="https://letsgoplai.com/email-assets/onboarding-thumbnail.png" alt="Watch the GoPlai walkthrough" width="480" style="width:100%;max-width:480px;display:block;border-radius:12px;border:0"/>
+      </a>
+    </td></tr>
+    </table>
+
     <!-- What to Expect -->
-    <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#10b981;margin:0 0 20px">WHAT TO EXPECT</p>
+    <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#10b981;margin:0 0 20px">HOW IT WORKS</p>
 
     <!-- Step 1 -->
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px">
@@ -139,12 +148,23 @@ async function sendWelcomeEmail(email) {
     </table>
 
     <!-- Step 3 -->
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px">
     <tr>
       <td width="40" valign="top" style="padding-top:2px"><span style="font-size:22px">&#127916;</span></td>
       <td>
         <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 4px">Get your highlight reel</p>
         <p style="font-size:14px;color:#666;margin:0;line-height:1.6">Receive a ready-to-share reel and individual clips of every key moment.</p>
+      </td>
+    </tr>
+    </table>
+
+    <!-- Step 4 -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px">
+    <tr>
+      <td width="40" valign="top" style="padding-top:2px"><span style="font-size:22px">&#128100;</span></td>
+      <td>
+        <p style="font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 4px">Claim your profile</p>
+        <p style="font-size:14px;color:#666;margin:0;line-height:1.6">Save every game and build your personal highlight library over time.</p>
       </td>
     </tr>
     </table>
