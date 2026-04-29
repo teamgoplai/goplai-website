@@ -65,28 +65,36 @@ body::after{
 
 /* ── NAV ── */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:500;
+  position:fixed;top:0;left:0;right:0;z-index:1000;
   display:flex;align-items:center;justify-content:space-between;
-  padding:1.25rem 2.5rem;
-  transition:background .4s,border-color .4s,padding .3s;
+  padding:.75rem 2.5rem;
+  min-height:84px;
+  transition:background .25s ease,border-color .25s ease,min-height .25s ease,padding .25s ease;
   border-bottom:1px solid transparent;
+  background:rgba(6,6,8,0);
 }
 nav.scrolled{
   background:rgba(6,6,8,.92);
   backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
   border-color:var(--border);
-  padding:.9rem 2.5rem;
+  padding:.5rem 2.5rem;
+  min-height:64px;
 }
 .nav-logo{
   text-decoration:none;
   display:flex;
   align-items:center;
+  flex-shrink:0;
 }
 .nav-logo img{
-  height:90px;
+  height:64px;
   width:auto;
   border-radius:10px;
+  transition:height .25s ease;
+  display:block;
 }
+nav.scrolled .nav-logo img{height:48px}
 .nav-links{display:flex;align-items:center;gap:2rem}
 .nav-links a{
   font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
@@ -99,9 +107,17 @@ nav.scrolled{
   letter-spacing:.06em;text-transform:uppercase;
   padding:.55rem 1.4rem;border-radius:4px;border:none;cursor:pointer;
   transition:background .2s,transform .15s;
+  flex-shrink:0;
 }
 .nav-cta:hover{background:var(--emerald-dim);transform:translateY(-1px)}
-@media(max-width:680px){.nav-links{display:none}nav{padding:1rem 1.25rem}}
+@media(max-width:680px){
+  .nav-links{display:none}
+  nav{padding:.6rem 1.25rem;min-height:68px}
+  nav.scrolled{padding:.45rem 1.25rem;min-height:56px}
+  .nav-logo img{height:48px}
+  nav.scrolled .nav-logo img{height:40px}
+  .nav-cta{padding:.5rem 1rem;font-size:.75rem}
+}
 
 /* ── HERO ── */
 .hero{
@@ -244,6 +260,18 @@ nav.scrolled{
   transition:background .2s;
 }
 .hero-form button:hover{background:var(--emerald-dim)}
+.hero-cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  background:var(--emerald);color:#000;
+  font-family:var(--font-body);font-weight:600;font-size:1rem;
+  letter-spacing:.04em;
+  padding:1.1rem 2rem;border:none;border-radius:6px;
+  cursor:pointer;white-space:nowrap;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 0 30px rgba(16,185,129,.18);
+}
+.hero-cta:hover{background:var(--emerald-dim);transform:translateY(-2px);box-shadow:0 0 40px rgba(16,185,129,.28)}
+.hero-cta:active{transform:translateY(0)}
 .hero-note{
   margin-top:.6rem;
   font-size:.73rem;color:rgba(255,255,255,.3);
@@ -669,86 +697,64 @@ section{padding:7rem 2.5rem}
   color:rgba(245,245,240,.5);line-height:1.6;
 }
 
-/* ── URGENCY BANNER ── */
-.urgency-section{
-  background:var(--black);padding:6rem 2.5rem;
+/* ── FINAL CTA ── */
+.final-cta-section{
+  background:var(--black);
+  padding:7rem 2.5rem;
   position:relative;overflow:hidden;
+  border-top:1px solid var(--border);
 }
-.urgency-card{
-  position:relative;max-width:800px;margin:0 auto;
-  background:linear-gradient(180deg,rgba(16,185,129,.04) 0%,rgba(6,6,8,.95) 100%);
-  border:1px solid rgba(16,185,129,.15);border-radius:24px;
-  padding:4rem 3rem;text-align:center;
+.final-cta-section::before{
+  content:'';position:absolute;
+  bottom:-200px;left:50%;transform:translateX(-50%);
+  width:900px;height:500px;
+  background:radial-gradient(ellipse at center bottom,rgba(16,185,129,.12) 0%,transparent 70%);
+  pointer-events:none;
 }
-.urgency-card::before{
-  content:'';position:absolute;inset:-1px;border-radius:24px;
-  background:linear-gradient(180deg,rgba(16,185,129,.25) 0%,rgba(16,185,129,.03) 100%);
-  z-index:-1;padding:1px;
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  mask-composite:exclude;
+.final-cta{
+  position:relative;
+  max-width:680px;margin:0 auto;
+  text-align:center;
 }
-.urgency-dot{
-  position:absolute;width:6px;height:6px;border-radius:50%;
-  background:var(--emerald);opacity:.4;
+.final-cta-badge{
+  display:inline-block;
+  font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--emerald);
+  background:rgba(16,185,129,.08);
+  border:1px solid rgba(16,185,129,.25);
+  padding:.5rem 1.1rem;border-radius:100px;
+  margin-bottom:2rem;
 }
-.urgency-dot-tl{top:2rem;left:2rem}
-.urgency-dot-br{bottom:2rem;right:2rem}
-.urgency-badge{
-  display:inline-flex;align-items:center;gap:.5rem;
-  background:var(--emerald);color:#000;
-  font-size:.78rem;font-weight:600;letter-spacing:.04em;
-  padding:.5rem 1.25rem;border-radius:100px;margin-bottom:2rem;
+.final-cta-title{
+  font-family:var(--font-display);
+  font-size:clamp(2.2rem,5vw,3.5rem);
+  line-height:1.1;letter-spacing:.01em;
+  margin-bottom:1.25rem;
 }
-.urgency-badge svg{width:16px;height:16px}
-.urgency-title{
-  font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);
-  line-height:1.15;letter-spacing:.01em;margin-bottom:1rem;
+.final-cta-sub{
+  font-size:1.05rem;font-weight:300;
+  color:rgba(245,245,240,.55);
+  max-width:480px;margin:0 auto 2.5rem;line-height:1.7;
 }
-.urgency-sub{
-  font-size:1rem;font-weight:300;color:rgba(245,245,240,.5);
-  max-width:500px;margin:0 auto 2.5rem;line-height:1.7;
-}
-.countdown{display:flex;justify-content:center;gap:1rem;margin-bottom:2.5rem}
-.countdown-item{text-align:center}
-.countdown-num{
-  display:flex;align-items:center;justify-content:center;
-  width:80px;height:90px;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-  border-radius:12px;
-  font-family:var(--font-display);font-size:2.5rem;font-weight:700;
-  color:var(--white);margin-bottom:.5rem;position:relative;overflow:hidden;
-}
-.countdown-num::before{
-  content:'';position:absolute;top:0;left:0;
-  width:20px;height:20px;
-  border-top:2px solid var(--emerald);border-left:2px solid var(--emerald);
-  border-radius:12px 0 0 0;
-}
-.countdown-label{
-  font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
-  color:rgba(245,245,240,.4);
-}
-.urgency-cta{
-  display:inline-flex;align-items:center;gap:.5rem;
+.final-cta-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
   background:var(--emerald);color:#000;
   font-family:var(--font-body);font-weight:600;font-size:1rem;
-  padding:1rem 2.5rem;border-radius:100px;border:none;
-  cursor:pointer;transition:background .2s,transform .15s;margin-bottom:1.5rem;
+  letter-spacing:.04em;
+  padding:1.1rem 2.2rem;border:none;border-radius:6px;
+  cursor:pointer;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 0 30px rgba(16,185,129,.2);
 }
-.urgency-cta:hover{background:var(--emerald-dim);transform:translateY(-2px)}
-.urgency-checks{display:flex;justify-content:center;gap:2rem}
-.urgency-check{
-  display:flex;align-items:center;gap:.4rem;
-  font-size:.82rem;color:rgba(245,245,240,.5);
+.final-cta-btn:hover{background:var(--emerald-dim);transform:translateY(-2px);box-shadow:0 0 40px rgba(16,185,129,.32)}
+.final-cta-btn:active{transform:translateY(0)}
+.final-cta-note{
+  margin-top:1.1rem;
+  font-size:.78rem;color:rgba(255,255,255,.35);
+  letter-spacing:.04em;
 }
-.urgency-check svg{color:var(--emerald);flex-shrink:0}
 @media(max-width:600px){
-  .urgency-section{padding:4rem 1.25rem}
-  .urgency-card{padding:2.5rem 1.5rem;border-radius:16px}
-  .countdown-num{width:60px;height:70px;font-size:1.8rem}
-  .countdown{gap:.6rem}
-  .urgency-title{font-size:clamp(1.6rem,6vw,2.2rem)}
+  .final-cta-section{padding:4.5rem 1.25rem}
 }
 
 /* ── FOOTER ── */
@@ -779,6 +785,252 @@ footer a:hover{color:var(--emerald)}
   .marquee-strip{padding:.6rem 0}
   .marquee-item{font-size:.7rem;padding:0 1.5rem}
 }
+
+/* ── SIGNUP MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(6,6,8,.78);
+  -webkit-backdrop-filter:blur(6px);
+  backdrop-filter:blur(6px);
+  display:none;
+  align-items:center;justify-content:center;
+  padding:1.5rem;
+  opacity:0;
+  transition:opacity .25s ease;
+}
+.modal-overlay.open{display:flex;opacity:1}
+.modal-card{
+  position:relative;
+  width:100%;max-width:440px;
+  background:var(--black2);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:2rem 1.75rem;
+  box-shadow:0 30px 80px rgba(0,0,0,.55), 0 0 60px rgba(16,185,129,.08);
+  transform:translateY(16px);
+  opacity:0;
+  transition:transform .3s cubic-bezier(.2,0,.2,1), opacity .3s ease;
+  max-height:calc(100vh - 3rem);
+  overflow-y:auto;
+}
+.modal-overlay.open .modal-card{transform:translateY(0);opacity:1}
+.modal-close{
+  position:absolute;top:.85rem;right:.85rem;
+  width:36px;height:36px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.65);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;line-height:1;
+  transition:background .2s,color .2s,border-color .2s;
+  z-index:2;
+}
+.modal-close:hover{background:rgba(255,255,255,.08);color:var(--white);border-color:rgba(255,255,255,.18)}
+.modal-title{
+  font-family:var(--font-display);
+  font-size:1.5rem;line-height:1.2;
+  margin-bottom:.4rem;
+  padding-right:2.5rem;
+}
+.modal-subtitle{
+  font-size:.88rem;font-weight:300;
+  color:rgba(245,245,240,.55);
+  margin-bottom:1.6rem;
+  padding-right:2.5rem;
+  line-height:1.5;
+}
+.modal-form{display:flex;flex-direction:column;gap:1rem}
+.form-field{display:flex;flex-direction:column;gap:.4rem;position:relative}
+.form-field label{
+  font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(245,245,240,.7);
+}
+.form-input,
+.select-button{
+  width:100%;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  color:var(--white);
+  font-family:var(--font-body);font-size:1rem;
+  padding:.85rem 1rem;
+  border-radius:6px;
+  outline:none;
+  transition:border-color .2s, background .2s;
+  min-height:48px;
+}
+.form-input:focus,
+.select-button:focus,
+.select-button.open{
+  border-color:rgba(16,185,129,.55);
+  background:rgba(255,255,255,.06);
+}
+.form-input::placeholder{color:rgba(255,255,255,.28)}
+
+.phone-input-wrap{
+  display:flex;align-items:center;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:6px;
+  transition:border-color .2s,background .2s;
+  min-height:48px;
+  overflow:hidden;
+}
+.phone-input-wrap:focus-within{border-color:rgba(16,185,129,.55);background:rgba(255,255,255,.06)}
+.phone-prefix{
+  padding:0 .55rem 0 1rem;
+  font-size:1rem;color:rgba(245,245,240,.7);
+  border-right:1px solid rgba(255,255,255,.08);
+  margin-right:.5rem;
+  user-select:none;
+  display:flex;align-items:center;height:46px;
+  flex-shrink:0;
+}
+.phone-input-wrap input{
+  flex:1;background:transparent;border:none;
+  color:var(--white);font-family:var(--font-body);font-size:1rem;
+  padding:.85rem .25rem .85rem 0;
+  outline:none;width:100%;min-width:0;
+}
+.phone-input-wrap input::placeholder{color:rgba(255,255,255,.28)}
+.field-help{font-size:.72rem;color:rgba(245,245,240,.4);line-height:1.4}
+
+/* Custom select */
+.select-wrap{position:relative}
+.select-button{
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;text-align:left;
+  font-family:var(--font-body);
+}
+.select-button[data-empty="true"] .select-label{color:rgba(255,255,255,.28)}
+.select-button .chev{
+  width:14px;height:14px;flex-shrink:0;margin-left:.5rem;
+  transition:transform .2s;
+  color:rgba(245,245,240,.5);
+}
+.select-button.open .chev{transform:rotate(180deg)}
+.select-panel{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:var(--black2);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:6px;
+  overflow:hidden;
+  z-index:5;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+  display:none;
+}
+.select-panel.open{display:block}
+.select-option{
+  padding:.85rem 1rem;
+  font-size:.95rem;color:var(--white);
+  cursor:pointer;
+  transition:background .15s;
+  min-height:44px;
+  display:flex;align-items:center;
+}
+.select-option:hover,.select-option.active{
+  background:rgba(16,185,129,.1);
+  color:var(--emerald);
+}
+
+.field-error{
+  font-size:.78rem;color:#ef4444;
+  display:none;
+  margin-top:.1rem;
+}
+.form-field.has-error .form-input,
+.form-field.has-error .phone-input-wrap,
+.form-field.has-error .select-button{
+  border-color:rgba(239,68,68,.6);
+}
+.form-field.has-error .field-error{display:block}
+
+.modal-submit{
+  width:100%;
+  background:var(--emerald);color:#000;
+  font-family:var(--font-body);font-weight:600;font-size:1rem;
+  letter-spacing:.04em;
+  padding:1rem 1.4rem;border:none;border-radius:6px;
+  cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+  transition:background .2s,transform .15s,opacity .2s;
+  margin-top:.4rem;
+  min-height:52px;
+}
+.modal-submit:hover:not(:disabled){background:var(--emerald-dim);transform:translateY(-1px)}
+.modal-submit:disabled{opacity:.7;cursor:wait}
+.modal-spinner{
+  width:14px;height:14px;
+  border:2px solid rgba(0,0,0,.25);
+  border-top-color:#000;
+  border-radius:50%;
+  animation:modal-spin .8s linear infinite;
+  display:none;
+}
+.modal-submit.loading .modal-spinner{display:inline-block}
+@keyframes modal-spin{to{transform:rotate(360deg)}}
+
+.modal-submit-error{
+  display:none;
+  margin-top:.85rem;
+  font-size:.85rem;color:#ef4444;
+  text-align:center;line-height:1.5;
+}
+.modal-submit-error a{color:var(--emerald);text-decoration:underline}
+
+.modal-success{
+  display:none;
+  text-align:center;
+  padding:1rem 0;
+}
+.modal-success .check-circle{
+  width:64px;height:64px;
+  margin:.5rem auto 1.25rem;
+  border-radius:50%;
+  background:rgba(16,185,129,.12);
+  border:1px solid rgba(16,185,129,.4);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--emerald);
+}
+.modal-success h3{
+  font-family:var(--font-display);
+  font-size:1.35rem;line-height:1.25;
+  margin-bottom:.6rem;
+}
+.modal-success p{
+  font-size:.95rem;font-weight:300;
+  color:rgba(245,245,240,.65);
+  line-height:1.6;margin-bottom:1.5rem;
+}
+.modal-success-close{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  color:var(--white);
+  font-family:var(--font-body);font-weight:500;font-size:.9rem;
+  padding:.7rem 1.6rem;border-radius:6px;cursor:pointer;
+  transition:background .2s,border-color .2s;
+}
+.modal-success-close:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+
+.modal-state-success .modal-form,
+.modal-state-success .modal-title,
+.modal-state-success .modal-subtitle{display:none}
+.modal-state-success .modal-success{display:block}
+
+body.modal-open{overflow:hidden}
+
+@media(max-width:600px){
+  .modal-overlay{padding:0;align-items:flex-end}
+  .modal-card{
+    max-width:100%;
+    border-radius:16px 16px 0 0;
+    padding:1.5rem 1.25rem 2rem;
+    transform:translateY(100%);
+    max-height:92vh;
+  }
+  .modal-overlay.open .modal-card{transform:translateY(0)}
+  .modal-title{font-size:1.3rem}
+}
 </style>
 </head>
 <body>
@@ -792,7 +1044,7 @@ footer a:hover{color:var(--emerald)}
     <a href="#founders">Team</a>
     <a href="#founders">About</a>
   </div>
-  <button class="nav-cta" onclick="scrollToCta()">Get early access</button>
+  <button class="nav-cta" type="button" data-signup-trigger="nav_button">Get early access</button>
 </nav>
 
 <!-- HERO -->
@@ -816,14 +1068,10 @@ footer a:hover{color:var(--emerald)}
       <strong>automatically. No editing. No scrubbing. Clips ready in minutes, not days.</strong>
     </p>
     <div class="hero-form-wrap">
-      <form class="hero-form" id="hero-form" onsubmit="handleWaitlist(event,'hero')">
-        <label for="hero-email" class="sr-only">Email address</label>
-        <input type="email" id="hero-email" placeholder="Your email" required autocomplete="email" inputmode="email"/>
-        <button type="submit">Get early access</button>
-      </form>
+      <button type="button" class="hero-cta" data-signup-trigger="hero_cta">
+        Get Early Access &rarr;
+      </button>
       <p class="hero-note">Free during beta · No credit card · Setup instructions after a short form</p>
-      <p class="success-msg" id="hero-success">You've got early access! We'll send setup instructions shortly.</p>
-      <p class="error-msg" id="hero-error" role="alert"></p>
     </div>
   </div>
 
@@ -1114,50 +1362,89 @@ footer a:hover{color:var(--emerald)}
   </div>
 </section>
 
-<!-- URGENCY BANNER -->
-<section class="urgency-section" id="waitlist">
+<!-- FINAL CTA -->
+<section class="final-cta-section" id="waitlist">
   <div class="container">
-    <div class="urgency-card reveal">
-      <div class="urgency-dot urgency-dot-tl"></div>
-      <div class="urgency-dot urgency-dot-br"></div>
-      <div class="urgency-badge">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        Limited Beta &mdash; Spring Season
-      </div>
-      <h2 class="urgency-title">Get your highlights before the season ends</h2>
-      <p class="urgency-sub">Join 500+ Bay Area families already using GoPlai. Free during beta &mdash; no credit card required.</p>
-      <div class="countdown" id="countdown">
-        <div class="countdown-item">
-          <div class="countdown-num" id="cd-days">14</div>
-          <div class="countdown-label">Days</div>
-        </div>
-        <div class="countdown-item">
-          <div class="countdown-num" id="cd-hours">08</div>
-          <div class="countdown-label">Hours</div>
-        </div>
-        <div class="countdown-item">
-          <div class="countdown-num" id="cd-mins">42</div>
-          <div class="countdown-label">Minutes</div>
-        </div>
-        <div class="countdown-item">
-          <div class="countdown-num" id="cd-secs">17</div>
-          <div class="countdown-label">Seconds</div>
-        </div>
-      </div>
-      <button class="urgency-cta" onclick="scrollToHero()">Get early access &rarr;</button>
-      <div class="urgency-checks">
-        <span class="urgency-check">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          Free beta
-        </span>
-        <span class="urgency-check">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          No credit card
-        </span>
-      </div>
+    <div class="final-cta reveal">
+      <div class="final-cta-badge">Free During Beta &middot; Bay Area</div>
+      <h2 class="final-cta-title">Your kid's best plays &mdash;<br>no editing required.</h2>
+      <p class="final-cta-sub">Record the game. Upload the footage. Get highlights back in an hour.</p>
+      <button type="button" class="final-cta-btn" data-signup-trigger="footer_cta">
+        Get Early Access &rarr;
+      </button>
+      <p class="final-cta-note">Free during beta &middot; No credit card required</p>
     </div>
   </div>
 </section>
+
+<!-- SIGNUP MODAL -->
+<div class="modal-overlay" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-card" role="document">
+    <button type="button" class="modal-close" id="modal-close-btn" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <h2 class="modal-title" id="modal-title">Join the Beta</h2>
+    <p class="modal-subtitle">Free access during beta. We'll text you within 24 hours to get you set up.</p>
+
+    <form class="modal-form" id="signup-form" novalidate>
+      <div class="form-field" data-field="first_name">
+        <label for="signup-firstname">First name</label>
+        <input type="text" id="signup-firstname" class="form-input" name="first_name" placeholder="Maria" required autocomplete="given-name"/>
+        <span class="field-error">Please enter your first name.</span>
+      </div>
+
+      <div class="form-field" data-field="email">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" class="form-input" name="email" placeholder="you@example.com" required autocomplete="email" inputmode="email"/>
+        <span class="field-error">Please enter a valid email address.</span>
+      </div>
+
+      <div class="form-field" data-field="phone">
+        <label for="signup-phone">Phone number</label>
+        <div class="phone-input-wrap">
+          <span class="phone-prefix">+1</span>
+          <input type="tel" id="signup-phone" name="phone" placeholder="(510) 555-1234" required autocomplete="tel-national" inputmode="tel" maxlength="14"/>
+        </div>
+        <span class="field-help">We'll text you when your highlights are ready. No spam.</span>
+        <span class="field-error">Please enter a valid 10-digit US phone number.</span>
+      </div>
+
+      <div class="form-field" data-field="user_type">
+        <label for="signup-usertype">I am a&hellip;</label>
+        <div class="select-wrap">
+          <button type="button" class="select-button" id="signup-usertype" data-empty="true" aria-haspopup="listbox" aria-expanded="false">
+            <span class="select-label">Select an option</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="select-panel" role="listbox">
+            <div class="select-option" role="option" data-value="parent">Parent &mdash; my kid plays basketball</div>
+            <div class="select-option" role="option" data-value="player">Player &mdash; I play basketball</div>
+            <div class="select-option" role="option" data-value="coach">Coach</div>
+          </div>
+          <input type="hidden" name="user_type" id="signup-usertype-value"/>
+        </div>
+        <span class="field-error">Please select an option.</span>
+      </div>
+
+      <button type="submit" class="modal-submit" id="signup-submit">
+        <span class="submit-label">Join the Beta &rarr;</span>
+        <span class="modal-spinner" aria-hidden="true"></span>
+      </button>
+      <p class="modal-submit-error" id="signup-error" role="alert">
+        Something went wrong. Try again or text us directly: <a href="sms:+15133319319">513-331-9319</a>
+      </p>
+    </form>
+
+    <div class="modal-success" id="signup-success">
+      <div class="check-circle">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 id="signup-success-msg">You're in!</h3>
+      <p>Check your phone &mdash; we'll text you within 24 hours to get you set up.</p>
+      <button type="button" class="modal-success-close" id="modal-success-close-btn">Close</button>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1184,15 +1471,6 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 reveals.forEach(el => io.observe(el));
 
-// Scroll to CTA / Hero
-function scrollToCta() {
-  document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
-}
-function scrollToHero() {
-  document.querySelector('.hero-form input').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  setTimeout(() => document.getElementById('hero-email').focus(), 700);
-}
-
 // Demo play
 function playDemo() {
   const player = document.getElementById('demo-player');
@@ -1202,27 +1480,6 @@ function playDemo() {
   video.style.display = 'block';
   video.play();
 }
-
-// Countdown timer — 14 days from page load
-(function() {
-  const deadline = new Date();
-  deadline.setDate(deadline.getDate() + 14);
-  function pad(n) { return String(n).padStart(2, '0'); }
-  function tick() {
-    const now = new Date();
-    const diff = Math.max(0, deadline - now);
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('cd-days').textContent = pad(d);
-    document.getElementById('cd-hours').textContent = pad(h);
-    document.getElementById('cd-mins').textContent = pad(m);
-    document.getElementById('cd-secs').textContent = pad(s);
-  }
-  tick();
-  setInterval(tick, 1000);
-})();
 
 // Lazy-load video when scrolled into view
 const lazyVideos = document.querySelectorAll('video[data-src]');
@@ -1238,42 +1495,196 @@ const videoObserver = new IntersectionObserver((entries) => {
 }, { rootMargin: '200px' });
 lazyVideos.forEach(v => videoObserver.observe(v));
 
-// Waitlist submit
-async function handleWaitlist(e, id) {
-  e.preventDefault();
-  const form = document.getElementById(id + '-form');
-  const btn = form.querySelector('button');
-  const email = document.getElementById(id + '-email').value;
-  const successEl = document.getElementById(id + '-success');
-  const errorEl = document.getElementById(id + '-error');
+// \u2500\u2500 Signup modal \u2500\u2500
+(function(){
+  const modal = document.getElementById('signup-modal');
+  const closeBtn = document.getElementById('modal-close-btn');
+  const successCloseBtn = document.getElementById('modal-success-close-btn');
+  const form = document.getElementById('signup-form');
+  const submitBtn = document.getElementById('signup-submit');
+  const submitLabel = submitBtn.querySelector('.submit-label');
+  const submitError = document.getElementById('signup-error');
+  const successHeading = document.getElementById('signup-success-msg');
 
-  btn.disabled = true;
-  btn.textContent = 'Submitting...';
-  if (errorEl) { errorEl.style.display = 'none'; errorEl.textContent = ''; }
+  const fields = {
+    first_name: form.querySelector('[data-field="first_name"]'),
+    email:      form.querySelector('[data-field="email"]'),
+    phone:      form.querySelector('[data-field="phone"]'),
+    user_type:  form.querySelector('[data-field="user_type"]')
+  };
+  const firstNameInput = document.getElementById('signup-firstname');
+  const emailInput     = document.getElementById('signup-email');
+  const phoneInput     = document.getElementById('signup-phone');
+  const userTypeBtn    = document.getElementById('signup-usertype');
+  const userTypeLabel  = userTypeBtn.querySelector('.select-label');
+  const userTypePanel  = userTypeBtn.parentElement.querySelector('.select-panel');
+  const userTypeHidden = document.getElementById('signup-usertype-value');
 
-  try {
-    const res = await fetch('/api/waitlist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, source: id }),
-    });
-    const data = await res.json();
+  let lastTriggerEl = null;
+  let formStartedTracked = false;
+  let currentTrigger = 'unknown';
 
-    if (res.ok) {
-      successEl.textContent = data.message;
-      form.style.display = 'none';
-      successEl.style.display = 'block';
-    } else {
-      btn.disabled = false;
-      btn.textContent = id === 'hero' ? 'Get early access' : 'Get early access \u2192';
-      if (errorEl) { errorEl.textContent = data.error || 'Something went wrong. Please try again.'; errorEl.style.display = 'block'; }
-    }
-  } catch {
-    btn.disabled = false;
-    btn.textContent = id === 'hero' ? 'Get early access' : 'Get early access \u2192';
-    if (errorEl) { errorEl.textContent = 'Network error. Please try again.'; errorEl.style.display = 'block'; }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
-}
+
+  function openModal(trigger){
+    currentTrigger = trigger || 'unknown';
+    lastTriggerEl = document.activeElement;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.classList.add('modal-open');
+    setTimeout(() => firstNameInput.focus(), 280);
+    formStartedTracked = false;
+    // TODO: PostHog -> posthog.capture('signup_modal_opened', { trigger: currentTrigger })
+  }
+
+  function resetForm(){
+    modal.classList.remove('modal-state-success');
+    form.reset();
+    userTypeHidden.value = '';
+    userTypeLabel.textContent = 'Select an option';
+    userTypeBtn.dataset.empty = 'true';
+    Object.values(fields).forEach(f => f.classList.remove('has-error'));
+    submitBtn.classList.remove('loading');
+    submitBtn.disabled = false;
+    submitLabel.textContent = 'Join the Beta \u2192';
+    submitError.style.display = 'none';
+    userTypePanel.classList.remove('open');
+    userTypeBtn.classList.remove('open');
+    userTypeBtn.setAttribute('aria-expanded','false');
+  }
+
+  function closeModal(){
+    if (!modal.classList.contains('open')) return;
+    if (!modal.classList.contains('modal-state-success')) {
+      const filled = [];
+      if (firstNameInput.value.trim()) filled.push('first_name');
+      if (emailInput.value.trim())     filled.push('email');
+      if (phoneInput.value.trim())     filled.push('phone');
+      if (userTypeHidden.value)        filled.push('user_type');
+      if (filled.length > 0) {
+        // TODO: PostHog -> posthog.capture('signup_modal_abandoned', { fields_filled: filled })
+      }
+    }
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('modal-open');
+    if (lastTriggerEl && typeof lastTriggerEl.focus === 'function') lastTriggerEl.focus();
+    setTimeout(resetForm, 320);
+  }
+
+  // Wire all triggers (any element with data-signup-trigger)
+  document.querySelectorAll('[data-signup-trigger]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal(el.dataset.signupTrigger);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  successCloseBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  // Form-started tracking (fires once on first interaction)
+  function markStarted(){
+    if (formStartedTracked) return;
+    formStartedTracked = true;
+    // TODO: PostHog -> posthog.capture('signup_form_started')
+  }
+  [firstNameInput, emailInput, phoneInput].forEach(input => {
+    input.addEventListener('input', markStarted);
+  });
+
+  // Phone live-formatter: (XXX) XXX-XXXX
+  phoneInput.addEventListener('input', () => {
+    const digits = phoneInput.value.replace(/\D/g,'').slice(0,10);
+    let out = '';
+    if (digits.length === 0)      out = '';
+    else if (digits.length < 4)   out = '(' + digits;
+    else if (digits.length < 7)   out = '(' + digits.slice(0,3) + ') ' + digits.slice(3);
+    else                          out = '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
+    phoneInput.value = out;
+  });
+
+  // Custom dropdown
+  userTypeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = userTypePanel.classList.toggle('open');
+    userTypeBtn.classList.toggle('open', isOpen);
+    userTypeBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+  userTypePanel.querySelectorAll('.select-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      userTypeHidden.value = opt.dataset.value;
+      userTypeLabel.textContent = opt.textContent;
+      userTypeBtn.dataset.empty = 'false';
+      userTypePanel.classList.remove('open');
+      userTypeBtn.classList.remove('open');
+      userTypeBtn.setAttribute('aria-expanded','false');
+      fields.user_type.classList.remove('has-error');
+      markStarted();
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (!userTypeBtn.parentElement.contains(e.target)) {
+      userTypePanel.classList.remove('open');
+      userTypeBtn.classList.remove('open');
+      userTypeBtn.setAttribute('aria-expanded','false');
+    }
+  });
+
+  // Validation
+  function validate(){
+    Object.values(fields).forEach(f => f.classList.remove('has-error'));
+    let ok = true;
+    if (firstNameInput.value.trim().length === 0) { fields.first_name.classList.add('has-error'); ok = false; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) { fields.email.classList.add('has-error'); ok = false; }
+    if (phoneInput.value.replace(/\D/g,'').length !== 10) { fields.phone.classList.add('has-error'); ok = false; }
+    if (!['parent','player','coach'].includes(userTypeHidden.value)) { fields.user_type.classList.add('has-error'); ok = false; }
+    return ok;
+  }
+
+  // Submit
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    submitError.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.classList.add('loading');
+    submitLabel.textContent = 'Joining...';
+
+    const phoneDigits = phoneInput.value.replace(/\D/g,'');
+    const payload = {
+      first_name: firstNameInput.value.trim(),
+      email:      emailInput.value.trim(),
+      phone:      '+1' + phoneDigits,
+      user_type:  userTypeHidden.value,
+      source:     currentTrigger
+    };
+
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('Bad response: ' + res.status);
+      successHeading.innerHTML = "You're in, " + escapeHtml(payload.first_name) + "! \ud83c\udfc0";
+      modal.classList.add('modal-state-success');
+      // TODO: PostHog -> posthog.capture('signup_completed', { user_type: payload.user_type, source: payload.source })
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('loading');
+      submitLabel.textContent = 'Join the Beta \u2192';
+      submitError.style.display = 'block';
+    }
+  });
+})();
 </script>
 <script>
 // Page view tracking — fires once per session, skips bots
