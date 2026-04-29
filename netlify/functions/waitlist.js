@@ -39,7 +39,7 @@ function jsonResponse(status, body) {
   });
 }
 
-async function insertEmail(email, source) {
+async function insertSignup(record) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist_emails`, {
     method: "POST",
     headers: {
@@ -48,7 +48,7 @@ async function insertEmail(email, source) {
       "Content-Type": "application/json",
       Prefer: "return=minimal",
     },
-    body: JSON.stringify({ email, source }),
+    body: JSON.stringify(record),
   });
 
   if (res.status === 409 || res.status === 23505) {
@@ -67,7 +67,10 @@ async function insertEmail(email, source) {
   return { duplicate: false };
 }
 
-async function sendWelcomeEmail(email) {
+async function sendWelcomeEmail(email, firstName) {
+  const greeting = firstName
+    ? `Hey ${firstName} &#128075;`
+    : "Hey &#128075;";
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -104,7 +107,7 @@ async function sendWelcomeEmail(email) {
   <!-- Body -->
   <tr><td style="background:#ffffff;border-radius:0 0 12px 12px;padding:32px 32px 40px">
 
-    <p style="font-size:20px;font-weight:700;color:#1a1a1a;margin:0 0 16px;line-height:1.3">Hey &#128075;</p>
+    <p style="font-size:20px;font-weight:700;color:#1a1a1a;margin:0 0 16px;line-height:1.3">${greeting}</p>
 
     <p style="font-size:15px;line-height:1.7;color:#444;margin:0 0 8px">
       You just locked in early access to <strong>GoPlai</strong> &mdash; the AI tool that turns your basketball game footage into highlight reels in minutes. No editing, no effort.
@@ -241,7 +244,7 @@ export default async function handler(req) {
     return jsonResponse(400, { error: "Invalid JSON" });
   }
 
-  const { email, source } = body;
+  const { email, source, first_name, phone, user_type } = body;
 
   if (!email || typeof email !== "string") {
     return jsonResponse(400, { error: "Email is required" });
@@ -252,14 +255,45 @@ export default async function handler(req) {
     return jsonResponse(400, { error: "Invalid email format" });
   }
 
-  const validSources = ["hero", "cta"];
+  // Modal payload: first_name, phone, user_type are required.
+  // (Older hero-form callers without them still work — validated only when present.)
+  const cleanFirstName =
+    typeof first_name === "string" ? first_name.trim().slice(0, 80) : null;
+  if (first_name !== undefined && (!cleanFirstName || cleanFirstName.length === 0)) {
+    return jsonResponse(400, { error: "First name is required" });
+  }
+
+  let cleanPhone = null;
+  if (phone !== undefined) {
+    if (typeof phone !== "string" || !/^\+1\d{10}$/.test(phone)) {
+      return jsonResponse(400, { error: "Invalid phone number" });
+    }
+    cleanPhone = phone;
+  }
+
+  const validUserTypes = ["parent", "player", "coach"];
+  let cleanUserType = null;
+  if (user_type !== undefined) {
+    if (!validUserTypes.includes(user_type)) {
+      return jsonResponse(400, { error: "Invalid user type" });
+    }
+    cleanUserType = user_type;
+  }
+
+  const validSources = ["hero", "cta", "nav_button", "hero_cta", "footer_cta"];
   const cleanSource = validSources.includes(source) ? source : "hero";
 
   try {
-    const { duplicate } = await insertEmail(email.toLowerCase().trim(), cleanSource);
+    const cleanEmail = email.toLowerCase().trim();
+    const record = { email: cleanEmail, source: cleanSource };
+    if (cleanFirstName) record.first_name = cleanFirstName;
+    if (cleanPhone) record.phone = cleanPhone;
+    if (cleanUserType) record.user_type = cleanUserType;
+
+    const { duplicate } = await insertSignup(record);
 
     if (!duplicate) {
-      await sendWelcomeEmail(email.toLowerCase().trim());
+      await sendWelcomeEmail(cleanEmail, cleanFirstName);
     }
 
     return jsonResponse(200, {

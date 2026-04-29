@@ -1528,6 +1528,42 @@ lazyVideos.forEach(v => videoObserver.observe(v));
     return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
+  // Per-tab session id for the signup funnel (modal_opened → form_started → submitted/abandoned).
+  // Lets analytics join events for one user without any persistent identifier.
+  function getSessionId(){
+    let sid = sessionStorage.getItem('signup_sid');
+    if (!sid) {
+      sid = (crypto && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : (Date.now().toString(36) + Math.random().toString(36).slice(2));
+      sessionStorage.setItem('signup_sid', sid);
+    }
+    return sid;
+  }
+
+  // Funnel events go straight to Supabase (INSERT-only RLS, anon key — same pattern as page_views).
+  // Fire-and-forget: we never block the user on telemetry.
+  function trackEvent(eventName, extra){
+    try {
+      const body = Object.assign({
+        event_name: eventName,
+        session_id: getSessionId(),
+        trigger: currentTrigger
+      }, extra || {});
+      fetch('https://cajdlgfdesedrkdozecb.supabase.co/rest/v1/signup_events', {
+        method: 'POST',
+        headers: {
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhamRsZ2ZkZXNlZHJrZG96ZWNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTk0MDksImV4cCI6MjA5MDYzNTQwOX0.MY40agAjjM7xdYaVWaCFSOkRoqzC_OW1OM3vhMEjm8Y',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNhamRsZ2ZkZXNlZHJrZG96ZWNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNTk0MDksImV4cCI6MjA5MDYzNTQwOX0.MY40agAjjM7xdYaVWaCFSOkRoqzC_OW1OM3vhMEjm8Y',
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(body),
+        keepalive: true
+      }).catch(function(){});
+    } catch (_) { /* never let telemetry break UX */ }
+  }
+
   function openModal(trigger){
     currentTrigger = trigger || 'unknown';
     lastTriggerEl = document.activeElement;
@@ -1536,7 +1572,7 @@ lazyVideos.forEach(v => videoObserver.observe(v));
     document.body.classList.add('modal-open');
     setTimeout(() => firstNameInput.focus(), 280);
     formStartedTracked = false;
-    // TODO: PostHog -> posthog.capture('signup_modal_opened', { trigger: currentTrigger })
+    trackEvent('signup_modal_opened');
   }
 
   function resetForm(){
@@ -1564,7 +1600,7 @@ lazyVideos.forEach(v => videoObserver.observe(v));
       if (phoneInput.value.trim())     filled.push('phone');
       if (userTypeHidden.value)        filled.push('user_type');
       if (filled.length > 0) {
-        // TODO: PostHog -> posthog.capture('signup_modal_abandoned', { fields_filled: filled })
+        trackEvent('signup_modal_abandoned', { fields_filled: filled });
       }
     }
     modal.classList.remove('open');
@@ -1593,7 +1629,7 @@ lazyVideos.forEach(v => videoObserver.observe(v));
   function markStarted(){
     if (formStartedTracked) return;
     formStartedTracked = true;
-    // TODO: PostHog -> posthog.capture('signup_form_started')
+    trackEvent('signup_form_started');
   }
   [firstNameInput, emailInput, phoneInput].forEach(input => {
     input.addEventListener('input', markStarted);
@@ -1676,7 +1712,7 @@ lazyVideos.forEach(v => videoObserver.observe(v));
       if (!res.ok) throw new Error('Bad response: ' + res.status);
       successHeading.innerHTML = "You're in, " + escapeHtml(payload.first_name) + "! \ud83c\udfc0";
       modal.classList.add('modal-state-success');
-      // TODO: PostHog -> posthog.capture('signup_completed', { user_type: payload.user_type, source: payload.source })
+      trackEvent('signup_completed', { user_type: payload.user_type });
     } catch (err) {
       submitBtn.disabled = false;
       submitBtn.classList.remove('loading');
