@@ -305,7 +305,10 @@ export default async function handler(req) {
     });
   } catch (err) {
     console.error("Waitlist error:", err);
-    return jsonResponse(500, { error: "Something went wrong. Please try again." });
+    return jsonResponse(500, {
+      error: "Something went wrong. Please try again.",
+      debug: err?.message ?? String(err),
+    });
   }
 }
 
