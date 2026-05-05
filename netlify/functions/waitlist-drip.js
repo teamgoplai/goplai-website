@@ -110,9 +110,9 @@ function buildNudge1Html(firstName) {
     <li>Free to try with your first game</li>
   </ul>
 
-  <p>The next time you play pickup or rec league, just prop your phone on a tripod and hit record. Upload at <a href="${APP_URL}" style="color:#00E676">letsgoplai.com</a> and you'll see what I mean.</p>
+  <p>The next time you play pickup or rec league, just prop your phone on a tripod and hit record. Upload at <a href="${APP_URL}" style="color:#B7FB5F">letsgoplai.com</a> and you'll see what I mean.</p>
 
-  <p style="margin:24px 0;padding:16px;background:#f0faf4;border-radius:10px;border-left:4px solid #00E676">
+  <p style="margin:24px 0;padding:16px;background:#f0faf4;border-radius:10px;border-left:4px solid #B7FB5F">
     <strong>Want direct access to the founders?</strong><br/>
     <span style="font-size:14px;color:#444">Join our early access WhatsApp group — give feedback, ask questions, chat with other players.</span><br/>
     <a href="${WHATSAPP_LINK}" style="display:inline-block;margin-top:8px;color:#25D366;font-weight:600;text-decoration:none">Join the group →</a>
@@ -137,14 +137,14 @@ function buildNudge2Html(firstName) {
 
   <p>I know inboxes are noisy, so here's the short version of why GoPlai might be worth 10 minutes of your time:</p>
 
-  <p style="margin:20px 0;padding:20px;background:#0a0a0a;border-radius:12px;color:#ffffff">
-    <strong style="color:#00E676;font-size:13px;letter-spacing:1px;text-transform:uppercase">What actually happens</strong><br/>
+  <p style="margin:20px 0;padding:20px;background:#000000;border-radius:12px;color:#ffffff">
+    <strong style="color:#B7FB5F;font-size:13px;letter-spacing:1px;text-transform:uppercase">What actually happens</strong><br/>
     <span style="font-size:15px;line-height:1.7">
       You upload a 90-minute pickup game.<br/>
       Our AI watches every frame.<br/>
       10 minutes later you get a highlight reel of every bucket, block, and nice play — plus individual clips you can share.<br/>
       <br/>
-      <em style="color:#00E676">That's it. No editing. No effort.</em>
+      <em style="color:#B7FB5F">That's it. No editing. No effort.</em>
     </span>
   </p>
 
@@ -154,7 +154,7 @@ function buildNudge2Html(firstName) {
     </a>
   </p>
 
-  <p>If it sounds cool, the next time you play just set your phone on a tripod behind the baseline and hit record. Upload at <a href="${APP_URL}" style="color:#00E676;font-weight:600">letsgoplai.com</a>.</p>
+  <p>If it sounds cool, the next time you play just set your phone on a tripod behind the baseline and hit record. Upload at <a href="${APP_URL}" style="color:#B7FB5F;font-weight:600">letsgoplai.com</a>.</p>
 
   <p>If it doesn't sound cool, no worries — I won't email you again about this. If you ever have thoughts on how we could make it more useful, hit reply. I read everything.</p>
 

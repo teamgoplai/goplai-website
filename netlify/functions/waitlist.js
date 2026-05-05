@@ -92,16 +92,16 @@ async function sendWelcomeEmail(email, firstName) {
 
   <!-- Logo -->
   <tr><td style="padding:0 0 24px;text-align:center">
-    <img src="https://joingoplai.com/public/images/goplai-logo-new.svg" alt="GoPlai" width="100" style="display:inline-block"/>
+    <img src="https://joingoplai.com/public/images/brand/logos/GoPlai%20CAPS-09.png" alt="GoPlai" width="100" style="display:inline-block"/>
   </td></tr>
 
   <!-- Hero Banner -->
-  <tr><td style="background:linear-gradient(135deg,#10b981 0%,#0d9669 50%,#047857 100%);border-radius:12px;padding:40px 32px;text-align:center">
-    <div style="display:inline-block;background:rgba(255,255,255,0.2);border-radius:20px;padding:6px 16px;margin-bottom:16px">
-      <span style="color:#fff;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase">&#10003; EARLY ACCESS UNLOCKED</span>
+  <tr><td style="background:linear-gradient(135deg,#B7FB5F 0%,#D3FF9A 50%,#B7FB5F 100%);border-radius:12px;padding:40px 32px;text-align:center">
+    <div style="display:inline-block;background:rgba(0,0,0,0.1);border-radius:20px;padding:6px 16px;margin-bottom:16px">
+      <span style="color:#000;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase">&#10003; EARLY ACCESS UNLOCKED</span>
     </div>
-    <h1 style="color:#fff;font-size:32px;font-weight:800;margin:0 0 8px;line-height:1.2">You're in!</h1>
-    <p style="color:rgba(255,255,255,0.85);font-size:15px;margin:0;line-height:1.5">Watch the walkthrough below and upload your first game at letsgoplai.com.</p>
+    <h1 style="color:#000;font-size:32px;font-weight:800;margin:0 0 8px;line-height:1.2">You're in!</h1>
+    <p style="color:rgba(0,0,0,0.75);font-size:15px;margin:0;line-height:1.5">Watch the walkthrough below and upload your first game at letsgoplai.com.</p>
   </td></tr>
 
   <!-- Body -->
@@ -126,7 +126,7 @@ async function sendWelcomeEmail(email, firstName) {
     </table>
 
     <!-- What to Expect -->
-    <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#10b981;margin:0 0 20px">HOW IT WORKS</p>
+    <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#B7FB5F;margin:0 0 20px">HOW IT WORKS</p>
 
     <!-- Step 1 -->
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px">
@@ -178,16 +178,16 @@ async function sendWelcomeEmail(email, firstName) {
     <!-- WhatsApp CTA -->
     <p style="font-size:15px;color:#444;text-align:center;margin:0 0 16px">Join our early access community on WhatsApp:</p>
     <table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin-bottom:20px">
-    <tr><td style="background:#10b981;border-radius:8px;text-align:center">
-      <a href="https://chat.whatsapp.com/Fx10fdn77e51flQ34HnCPr?mode=gi_t" target="_blank" style="display:inline-block;padding:14px 32px;color:#fff;font-size:15px;font-weight:700;text-decoration:none">Join WhatsApp Group &rarr;</a>
+    <tr><td style="background:#B7FB5F;border-radius:8px;text-align:center">
+      <a href="https://chat.whatsapp.com/Fx10fdn77e51flQ34HnCPr?mode=gi_t" target="_blank" style="display:inline-block;padding:14px 32px;color:#000;font-size:15px;font-weight:700;text-decoration:none;letter-spacing:1px;text-transform:uppercase">Join WhatsApp Group &rarr;</a>
     </td></tr>
     </table>
 
     <!-- Referral CTA -->
     <p style="font-size:15px;color:#444;text-align:center;margin:0 0 16px">Know a sports parent who should be in on this early?</p>
     <table role="presentation" cellpadding="0" cellspacing="0" align="center">
-    <tr><td style="background:#10b981;border-radius:8px;text-align:center">
-      <a href="https://joingoplai.com" target="_blank" style="display:inline-block;padding:14px 32px;color:#fff;font-size:15px;font-weight:700;text-decoration:none">Share GoPlai &rarr;</a>
+    <tr><td style="background:#B7FB5F;border-radius:8px;text-align:center">
+      <a href="https://joingoplai.com" target="_blank" style="display:inline-block;padding:14px 32px;color:#000;font-size:15px;font-weight:700;text-decoration:none;letter-spacing:1px;text-transform:uppercase">Share GoPlai &rarr;</a>
     </td></tr>
     </table>
 
