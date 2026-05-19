@@ -26,8 +26,8 @@ const EXCLUDE_EMAILS = new Set([
 ]);
 
 const VIDEO_LINK = "https://player.videodb.io/watch?v=LPJ7bya7sc0";
-const THUMBNAIL_URL = "https://joingoplai.com/email-assets/onboarding-thumbnail.png";
-const LOGO_URL = "https://joingoplai.com/email-assets/goplai-logo.png";
+const THUMBNAIL_URL = "https://joingoplai.com/public/email-assets/onboarding-thumbnail.png";
+const LOGO_URL = "https://joingoplai.com/public/email-assets/goplai-logo.png";
 const WHATSAPP_LINK = "https://chat.whatsapp.com/Fx10fdn77e51flQ34HnCPr?mode=gi_t";
 const APP_URL = "https://letsgoplai.com";
 

@@ -120,7 +120,7 @@ async function sendWelcomeEmail(email, firstName) {
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 32px">
     <tr><td align="center">
       <a href="https://player.videodb.io/watch?v=LPJ7bya7sc0" target="_blank" style="text-decoration:none">
-        <img src="https://joingoplai.com/email-assets/onboarding-thumbnail.png" alt="Watch the GoPlai walkthrough" width="480" style="width:100%;max-width:480px;display:block;border-radius:12px;border:0"/>
+        <img src="https://joingoplai.com/public/email-assets/onboarding-thumbnail.png" alt="Watch the GoPlai walkthrough" width="480" style="width:100%;max-width:480px;display:block;border-radius:12px;border:0"/>
       </a>
     </td></tr>
     </table>
